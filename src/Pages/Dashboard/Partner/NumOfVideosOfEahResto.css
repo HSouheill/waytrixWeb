@@ -1,0 +1,61 @@
+/* Most complex dark theme design in the world */
+.num-of-videos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .restaurant-card {
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .restaurant-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .restaurant-email,
+  .restaurant-phone {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .total-max-times {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  /* Additional intricate dark theme styles */
+  body {
+    background-color: #111;
+    color: #fff;
+  }
+  
+  /* Unique class names for the most complex design */
+  .complex-dark-theme {
+    background-color: #222;
+    border-color: #fff;
+  }
+  
+  .complex-dark-theme .restaurant-name {
+    font-size: 26px;
+  }
+  
+  .complex-dark-theme .restaurant-email,
+  .complex-dark-theme .restaurant-phone {
+    font-size: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .num-of-videos-container {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+  }
+  

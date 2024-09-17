@@ -1,0 +1,85 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+  
+  .luxurious-dark-form {
+    background-color: black;
+    padding: 30px;
+    border: 2px solid white;
+    border-radius: 10px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  }
+  
+  .luxurious-dark-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .luxurious-dark-form label {
+    margin-bottom: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  
+  .luxurious-dark-form input,
+  .luxurious-dark-form select {
+    max-width: calc(100% - 22px);
+    padding: 10px;
+    margin-top: 5px;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+  
+  .luxurious-dark-form button {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+  }
+  
+  .luxurious-dark-form button:hover {
+    background-color: white;
+    color: black;
+  }
+  
+  .info {
+    margin-top: 20px;
+    color: white;
+    font-size: 1em;
+  }
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 1000;
+  }
+  
+  .modal p {
+    margin: 0;
+    font-size: 16px;
+    color: black;
+  }
+  

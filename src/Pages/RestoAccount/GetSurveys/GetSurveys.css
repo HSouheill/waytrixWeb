@@ -1,0 +1,49 @@
+.dark-theme {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .survey-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .survey-item {
+    background-color: #222;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+  
+  .survey-name {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  
+  .survey-details {
+    border-top: 1px solid #444;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  
+  .survey-detail {
+    margin: 5px 0;
+    color: #ccc;
+  }
+  
+  @media (max-width: 768px) {
+    .survey-list {
+      grid-template-columns: 1fr;
+    }
+  }
+  

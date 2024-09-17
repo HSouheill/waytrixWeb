@@ -1,0 +1,88 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import './AddTableOrValet.css';
+
+const AddWaiterValet = () => {
+  const [restoToken, setRestoToken] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('table');
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const { restoId } = useParams();
+
+  useEffect(() => {
+    const token = localStorage.getItem('restoToken');
+    setRestoToken(token);
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      name,
+      email,
+      phone,
+      password,
+      role,
+      restoId
+    };
+
+    try {
+      const response = await axios.post('http://localhost:3030/api/Auth/signupTableValet', data, {
+        headers: {
+          Authorization: `Bearer ${restoToken}`
+        }
+      });
+      console.log(response.data);
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        navigate('/');
+      }, 5000);
+    } catch (error) {
+      console.error('There was an error!', error);
+    }
+  };
+
+  return (
+    <div className="form-container">
+      <form onSubmit={handleSubmit} className="luxurious-dark-form">
+        <h2>Add TABLE Or VALET</h2>
+        <label>
+          Name:
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <label>
+          Email:
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </label>
+        <label>
+          Phone:
+          <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        </label>
+        <label>
+          Password:
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </label>
+        <label>
+          Role:
+          <select style={{ width: '100%' }} value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="table">Table</option>
+            <option value="valet">Valet</option>
+          </select>
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+      {showModal && (
+        <div className="modal">
+          <p style={{ color: 'white' }}>The account of the {role} has been added successfully!</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AddWaiterValet;

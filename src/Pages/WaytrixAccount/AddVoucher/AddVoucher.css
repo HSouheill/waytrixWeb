@@ -1,0 +1,55 @@
+.add-voucher-container {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: start; /* Align labels to the start */
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    border:2px solid white;
+  }
+  

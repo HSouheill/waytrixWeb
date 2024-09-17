@@ -1,0 +1,68 @@
+/* AddVideo.css */
+.form-container {
+    color: white;
+    background-color: black;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .luxurious-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .labelc {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .input {
+    padding: 10px;
+    margin:10;
+    max-width: 300px;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .submit-btn {
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .grid-container-c {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Adjust gap as needed */
+  }
+  
+  .grid-itemc {
+    border: 1px solid #ccc; /* Example border */
+    padding: 10px;
+    text-align: center;
+  }
+
+
+  
+  @media (max-width: 768px) {
+    .grid-container-c {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust for smaller screens */
+    }
+  }
+  

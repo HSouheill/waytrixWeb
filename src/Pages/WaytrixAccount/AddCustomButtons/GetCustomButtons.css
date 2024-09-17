@@ -1,0 +1,40 @@
+/* styles.css */
+.custom-buttons-container {
+    background-color: #111;
+    color: white !important;
+    padding: 20px;
+  }
+  
+  .buttons-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    color: white !important;
+
+    gap: 20px;
+  }
+  
+  .custom-button {
+    background-color: #333;
+    padding: 10px;
+    color: white !important;
+
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .custom-button img {
+    max-width: 100%;
+    color: white !important;
+
+    height: auto;
+  }
+  
+  .custom-button p {
+    margin-top: 10px;
+    color: white !important;
+
+    text-align: center;
+  }
+  

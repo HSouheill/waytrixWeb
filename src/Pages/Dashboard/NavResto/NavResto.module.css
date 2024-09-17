@@ -1,0 +1,50 @@
+
+.resto-accounts-container {
+  text-decoration: none;
+}
+.addRestoButtonContainer {
+  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.link {
+  display: inline-block;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.link:hover {
+  background-color: #dadada;
+}
+
+.resto-link {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.resto-link:hover {
+  text-decoration: none; /* Prevents underline on hover */
+}
+
+.resto-card {
+  text-decoration: none;
+}
+
+
+
+
+.map {
+  width: 100%; /* Make the iframe take 100% width of the card */
+  height: 200px; /* Adjust the height if necessary */
+  border: none; /* Optional: Remove border */
+}
+
+/* @media (max-width: 768px) {
+  .map {
+    height: 150px; 
+  }
+} */

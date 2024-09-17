@@ -1,0 +1,31 @@
+.dark-card {
+    background-color: #121212; /* Dark background */
+    color: #f0f0f0; /* Light text */
+    border: 1px solid #333; /* Dark border */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  }
+  
+  .card-title {
+    color: #fff; /* White title */
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .card-content {
+    margin-top: 10px;
+  }
+  
+  .survey-info {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .survey-info:last-child {
+    margin-bottom: 0;
+  }
+  

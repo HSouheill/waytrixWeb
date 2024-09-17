@@ -1,0 +1,60 @@
+.form-container {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+  }
+  
+  input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+ 
+  .modall {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 2px solid white;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+  }
+  
+  .modall h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  /* Adjust the width and other styles as needed */
+  

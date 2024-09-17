@@ -1,0 +1,53 @@
+.get-for-loop-id {
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* White text */
+    padding: 20px;
+  }
+  
+  .id-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .video-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    grid-gap: 20px;
+  }
+  
+  .video-item {
+    background-color: #1e1e1e; /* Darker card background */
+    padding: 15px;
+    border-radius: 5px;
+  }
+  
+  .video-item p {
+    margin: 10px 0; /* Increased spacing between paragraphs */
+    padding: 5px;
+    padding:20px;
+    margin:20px;
+    border: 1px solid #ffffff; /* White border */
+    border-radius: 3px;
+  }
+  
+  .video-label {
+    font-weight: bold;
+    color: #f0f0f0; /* Lighter shade of white */
+  }
+  
+  .video-detail {
+    color: #dddddd; /* Light shade of white */
+  }
+  
+  .input-label {
+    font-weight: bold;
+    color: #e0e0e0; /* Different shade of white */
+  }
+  
+  @media (max-width: 768px) {
+    .video-list {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust columns for smaller screens */
+    }
+  }
+  

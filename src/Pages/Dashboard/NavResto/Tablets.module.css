@@ -1,0 +1,63 @@
+/* Tablets.module.css */
+.excelTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .excelTable th, .excelTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  .excelTable th {
+    color: black;
+  }
+  
+  .excelTable th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .excelTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+    color:black;
+  }
+  .button{
+    width: 60px;
+    border: 1px solid black;
+  }
+  
+  .addRestoButtonContainer {
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .link {
+    display: inline-block;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+
+  .orderInput {
+    width: 60px; /* Adjust this value to your preference */
+    text-align: center; /* Optional: centers the text inside the input */
+    padding: 4px; /* Optional: add padding if needed */
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+import React, { useEffect, useState } from 'react';
+
+const Charts = () => {
+  // totalTabletsNum
+  const [stats, setStats] = useState({
+    totalRestoNum: localStorage.getItem('totalRestoNum'),
+    totalTableNum: localStorage.getItem('totalTableNum'),
+    totalWaiterNum: localStorage.getItem('totalWaiterNum'),
+    totalNumberOfCars: localStorage.getItem('totalNumberOfCars'),
+    totalContactUsClick: localStorage.getItem('totalContactUsClick'),
+    totalValetNum: localStorage.getItem('totalValetNum'),
+    totalTabletsNum: localStorage.getItem('totalTabletsNum')
+
+  });
+
+  // Effect to update values every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStats({
+        totalRestoNum: localStorage.getItem('totalRestoNum'),
+        totalTableNum: localStorage.getItem('totalTableNum'),
+        totalWaiterNum: localStorage.getItem('totalWaiterNum'),
+        totalNumberOfCars: localStorage.getItem('totalNumberOfCars'),
+        totalContactUsClick: localStorage.getItem('totalContactUsClick'),
+        totalValetNum: localStorage.getItem('totalValetNum'),
+        totalTabletsNum: localStorage.getItem('totalTabletsNum')
+
+      });
+    }, 3000);
+
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
+  }, []); // Empty dependency array ensures effect runs only on mount
+
+  return (
+    <div>
+      <h1 style={{ color: 'white' }}>Total Resto Num: {stats.totalRestoNum}</h1>
+      <h1 style={{ color: 'white' }}>Total Table Num: {stats.totalTableNum}</h1>
+      <h1 style={{ color: 'white' }}>Total Waiter Num: {stats.totalWaiterNum}</h1>
+      <h1 style={{ color: 'white' }}>Total Number Of Cars: {stats.totalNumberOfCars}</h1>
+      <h1 style={{ color: 'white' }}>Total Contact Us Click: {stats.totalContactUsClick}</h1>
+      <h1 style={{ color: 'white' }}>Total Valet Num Click: {stats.totalValetNum}</h1>
+      <h1 style={{ color: 'white' }}>Total Tablets Num : {stats.totalTabletsNum}</h1>
+
+
+    </div>
+  );
+};
+
+export default Charts;

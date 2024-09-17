@@ -1,0 +1,58 @@
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; /* Adjusted gap for smaller screens */
+    max-width: 1400px; /* Increased max-width */
+    padding: 20px; /* Adjusted padding for smaller screens */
+    border: 2px solid #fff; /* White border around grid */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); /* Subtle glow */
+    margin: 0 auto; /* Center the grid container */
+}
+
+.card {
+    background: linear-gradient(145deg, #222, #333); /* Gradient background */
+    color: #fff; /* White text color */
+    border-radius: 12px; /* More rounded corners */
+    padding: 20px; /* Adjusted padding for smaller screens */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 
+                0 6px 6px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card-content {
+    text-align: center;
+}
+
+.card-content h4 {
+    margin-bottom: 20px; /* Space between title and text */
+    font-size: 24px; /* Larger font size */
+    border-bottom: 2px solid #fff; /* White underline */
+    padding-bottom: 10px; /* Padding below the title */
+}
+
+.card-content p {
+    font-size: 18px; /* Increased font size */
+    letter-spacing: 1px; /* Spacing between letters */
+}
+
+@media screen and (max-width: 768px) {
+    .grid-container {
+        gap: 20px; /* Adjusted gap for smaller screens */
+        padding: 20px; /* Adjusted padding for smaller screens */
+    }
+
+    .card {
+        padding: 20px; /* Adjusted padding for smaller screens */
+    }
+
+    .card-content h4 {
+        font-size: 20px; /* Adjusted font size for smaller screens */
+        padding-bottom: 8px; /* Adjusted padding for smaller screens */
+    }
+
+    .card-content p {
+        font-size: 16px; /* Adjusted font size for smaller screens */
+    }
+}

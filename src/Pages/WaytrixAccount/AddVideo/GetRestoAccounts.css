@@ -1,0 +1,35 @@
+.resto-accounts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: #111;
+    color: #fff;
+  }
+  
+  .resto-card {
+    padding: 20px;
+    border-radius: 10px;
+    font-weight:bold;
+    background-color: #333;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .resto-card h2 {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .resto-card p {
+    margin-bottom: 5px;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .resto-card p:last-child {
+    margin-bottom: 0;
+  }
+  

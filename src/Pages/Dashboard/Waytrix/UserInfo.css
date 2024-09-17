@@ -1,0 +1,37 @@
+.dark-theme-table {
+    background-color: #222;
+    color: #eee;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .dark-theme-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .dark-theme-table th,
+  .dark-theme-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+  }
+  
+  .dark-theme-table th {
+    background-color: #444;
+  }
+  
+  .dark-theme-table td {
+    background-color: #333;
+  }
+  
+  .dark-theme-table th,
+  .dark-theme-table td:first-child {
+    border-top-left-radius: 4px;
+  }
+  
+  .dark-theme-table th,
+  .dark-theme-table td:last-child {
+    border-top-right-radius: 4px;
+  }
+  
