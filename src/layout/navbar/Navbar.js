@@ -109,9 +109,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-logo">
+      <Link to="/" style={{ textDecoration: 'none' }} className="navbar-logo">
           <p style={{ color: 'white', fontWeight: 'bold', fontStyle: 'italic' }}>Waytrix</p>
-        </div>
+        </Link>
         <div className="navbar-toggle" onClick={toggleDrawer}>
           <div className={`hamburger ${drawerOpen ? 'open' : ''}`}>
             <div className="linee" style={{ width: '100%' }}></div>
