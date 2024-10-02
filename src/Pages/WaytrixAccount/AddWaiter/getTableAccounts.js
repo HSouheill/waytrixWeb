@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import './getTableAccounts.css';
 import { useNavigate } from 'react-router-dom';
+import { ipAddress } from '../../../config';
 
 const GetTableAccountsLuxurious = () => {
   const [accounts, setAccounts] = useState([]);
@@ -16,7 +17,7 @@ const GetTableAccountsLuxurious = () => {
     }
 
     try {
-      const response = await axios.get('https://waytrixback.onrender.com/api/Auth/getTableAccounts', {
+      const response = await axios.get(`${ipAddress}/api/Auth/getTableAccounts`, {
         headers: {
           Authorization: waytrixToken,
         },
@@ -26,7 +27,7 @@ const GetTableAccountsLuxurious = () => {
       // Fetch restaurant info for each account
       await Promise.all(response.data.map(async (account, index) => {
         try {
-          const res = await axios.post('https://waytrixback.onrender.com/api/Auth/getRestoInfo', { restoId: account.restoId }, {
+          const res = await axios.post(`${ipAddress}/api/Auth/getRestoInfo`, { restoId: account.restoId }, {
             headers: {
               Authorization: waytrixToken,
             },

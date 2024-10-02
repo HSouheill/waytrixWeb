@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom'; // Import useParams for getting URL parameters
 import './VidPreview.css'; // Import CSS file for styling
+import { ipAddress } from '../../../config';
 
 function HomeScreen() {
   const [mediaURL, setMediaURL] = useState(null);
@@ -18,7 +19,7 @@ function HomeScreen() {
     try {
       const waytrixToken = localStorage.getItem('waytrixToken');
       const response = await axios.post(
-        'https://waytrixback.onrender.com/api/VideoRoutes/GetOneVideoPreview',
+        `${ipAddress}/api/VideoRoutes/GetOneVideoPreview`,
         {
           tableId: id, // Use 'id' from URL params
         },

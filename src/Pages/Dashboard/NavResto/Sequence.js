@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Tablets.module.css';
+import { ipAddress } from '../../../config';
 
 const Sequence = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const Sequence = () => {
       }
 
       try {
-        const response = await axios.get('https://waytrixback.onrender.com/api/Auth/getAllVideosByRestoId', {
+        const response = await axios.get(`${ipAddress}/api/Auth/getAllVideosByRestoId`, {
           params: { restoId },
         });
         if (response.data) {
@@ -48,7 +49,7 @@ const Sequence = () => {
     const fetchTableNames = async (tableIds) => {
       try {
         const tableNameRequests = tableIds.map(async (tableId) => {
-          const response = await axios.post('https://waytrixback.onrender.com/api/Auth/getTableNameByTableId', {
+          const response = await axios.post(`${ipAddress}/api/Auth/getTableNameByTableId`, {
             tableId
           });
           return { tableId, tableName: response.data.tableName };
@@ -70,7 +71,7 @@ const Sequence = () => {
     const fetchPartnerNames = async (partnerIds) => {
       try {
         const partnerNameRequests = partnerIds.map(async (partnerId) => {
-          const response = await axios.post('https://waytrixback.onrender.com/api/Auth/getPartnerNameByPartnerId', {
+          const response = await axios.post(`${ipAddress}/api/Auth/getPartnerNameByPartnerId`, {
             partnerId
           });
           return { partnerId, partnerName: response.data.partnerName };
@@ -94,7 +95,7 @@ const Sequence = () => {
 
   const handleDelete = async (videoId) => {
     try {
-      await axios.delete('https://waytrixback.onrender.com/api/Auth/deleteVideoByTableId', {
+      await axios.delete(`${ipAddress}/api/Auth/deleteVideoByTableId`, {
         data: { videoId },
       });
       setVideos(videos.filter(video => video._id !== videoId));
@@ -105,7 +106,7 @@ const Sequence = () => {
 
   const handleUpdateOrder = async (videoId, newOrder) => {
     try {
-      await axios.patch('https://waytrixback.onrender.com/api/Auth/updateVideoOrder', {
+      await axios.patch(`${ipAddress}/api/Auth/updateVideoOrder`, {
         videoId,
         newOrder
       });

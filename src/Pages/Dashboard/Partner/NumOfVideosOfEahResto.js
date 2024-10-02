@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './NumOfVideosOfEahResto.css';
+import { ipAddress } from '../../../config';
 
 export const NumOfVideosOfEahResto = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -16,7 +17,7 @@ export const NumOfVideosOfEahResto = () => {
         const requestBody = {
           "partnerId": partnerId
         };
-        const response = await axios.post('https://waytrixback.onrender.com/api/PartnerAccountRoutes/get_all_restaurants_for_a_specific_partner', requestBody, { headers });
+        const response = await axios.post(`${ipAddress}/api/PartnerAccountRoutes/get_all_restaurants_for_a_specific_partner`, requestBody, { headers });
         setRestaurants(response.data);
 
         // Iterate over each restaurant to make a POST request
@@ -26,7 +27,7 @@ export const NumOfVideosOfEahResto = () => {
               "partnerId": partnerId,
               "restoId": restaurant._id
             };
-            const videoResponse = await axios.post('https://waytrixback.onrender.com/api/PartnerAccountRoutes/num_of_videos_in_each_resto_per_day', requestBodyVideos, { headers });
+            const videoResponse = await axios.post(`${ipAddress}/api/PartnerAccountRoutes/num_of_videos_in_each_resto_per_day`, requestBodyVideos, { headers });
             const totalMaxTimes = videoResponse.data.totalMaxTimes;
             // Update the restaurant object with the response data
             setRestaurants(prevRestaurants => prevRestaurants.map(resto => 
@@ -34,7 +35,7 @@ export const NumOfVideosOfEahResto = () => {
             ));
 
             // Fetch vouchers collected for each restaurant
-            const vouchersResponse = await axios.post('https://waytrixback.onrender.com/api/PartnerAccountRoutes/num_of_vouchers_collected_resto_specific', { restoId: restaurant._id }, { headers });
+            const vouchersResponse = await axios.post(`${ipAddress}/api/PartnerAccountRoutes/num_of_vouchers_collected_resto_specific`, { restoId: restaurant._id }, { headers });
             const winnedVouchers = vouchersResponse.data.WinnedVouchers;
             // Update the restaurant object with the vouchers data
             setRestaurants(prevRestaurants => prevRestaurants.map(resto =>

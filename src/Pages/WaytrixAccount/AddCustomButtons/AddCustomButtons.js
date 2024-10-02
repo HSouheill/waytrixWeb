@@ -4,6 +4,7 @@ import axios from 'axios';
 import './AddCustomButtonsScreen.css';
 import Multer from '../AddVideo/multer/multer';
 import { Link } from 'react-router-dom';
+import { ipAddress } from '../../../config';
 
 const AddCustomButtonsScreen = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ const AddCustomButtonsScreen = () => {
         Authorization: `${waytrixToken}`
       };
   
-      await axios.post('https://waytrixback.onrender.com/api/ButtonsRoutes/AddCustomButtons', jsonData, { headers });
+      await axios.post(`${ipAddress}/api/ButtonsRoutes/AddCustomButtons`, jsonData, { headers });
       setShowModal(true);
       setOrder('');
       setSvgLink('');

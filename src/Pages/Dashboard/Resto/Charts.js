@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar, Pie, Line, Doughnut } from 'react-chartjs-2';
+import { ipAddress } from '../../../config';
 
 import './Cards.css'; // Import CSS for styling
 
@@ -16,7 +17,7 @@ export const Cards = () => {
         };
   
         const response = await axios.post(
-          'https://waytrixback.onrender.com/api/DashBoardRoutes/get_survey_num_by_restoId',
+          `${ipAddress}/api/DashBoardRoutes/get_survey_num_by_restoId`,
           reqBody,
           {
             headers: {

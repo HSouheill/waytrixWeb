@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Tablets.module.css';
+import { ipAddress } from '../../../config';
 
 const Valet = () => {
   const { search } = useLocation();
@@ -17,7 +18,7 @@ const Valet = () => {
   useEffect(() => {
     const fetchValets = async () => {
       try {
-        const response = await axios.get(`https://waytrixback.onrender.com/api/Auth/valet-accounts?restoId=${id}`);
+        const response = await axios.get(`${ipAddress}/api/Auth/valet-accounts?restoId=${id}`);
         if (response.data) {
           setValets(response.data);
         } else {
@@ -38,7 +39,7 @@ const Valet = () => {
   // Function to delete a valet
   const deleteValet = async (valetId) => {
     try {
-      const response = await axios.delete('https://waytrixback.onrender.com/api/Auth/delete-valet', { data: { valetId } });
+      const response = await axios.delete(`${ipAddress}/api/Auth/delete-valet`, { data: { valetId } });
       if (response.status === 200) {
         setValets(valets.filter((valet) => valet._id !== valetId));
       } else {
@@ -59,7 +60,7 @@ const Valet = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://waytrixback.onrender.com/api/Auth/update_valet', {
+      const response = await axios.post(`${ipAddress}/api/Auth/update_valet`, {
         valetId: editingValet,
         ...formData,
       });

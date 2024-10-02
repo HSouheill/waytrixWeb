@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Multer from '../../WaytrixAccount/AddVideo/multer/multer';
+import { ipAddress } from '../../../config';
 
 const AddVideoSeq = () => {
   const location = useLocation();
@@ -31,7 +32,7 @@ const AddVideoSeq = () => {
     const fetchPartners = async () => {
       try {
         const waytrixToken = localStorage.getItem('waytrixToken');
-        const { data } = await axios.get('https://waytrixback.onrender.com/api/PartnerAccountRoutes/get_partners', {
+        const { data } = await axios.get(`${ipAddress}/api/PartnerAccountRoutes/get_partners`, {
           headers: {
             Authorization: waytrixToken
           }
@@ -73,7 +74,7 @@ const AddVideoSeq = () => {
       const waytrixToken = localStorage.getItem('waytrixToken');
       
       // Send POST request with restoId in the request body
-      const { data } = await axios.post('https://waytrixback.onrender.com/api/Auth/videos-length', {
+      const { data } = await axios.post(`${ipAddress}/api/Auth/videos-length`, {
         restoId: restoId // Send restoId in the request body
       }, {
         headers: {
@@ -107,7 +108,7 @@ const AddVideoSeq = () => {
       }
   
       const waytrixToken = localStorage.getItem('waytrixToken');
-      const { data } = await axios.post('https://waytrixback.onrender.com/api/VideoRoutes/AddVideo', {
+      const { data } = await axios.post(`${ipAddress}/api/VideoRoutes/AddVideo`, {
         videoURL: formData.videoURL,
         restoId: restoId,
     

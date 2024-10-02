@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './AssignTablesToWaiter.css';
+import { ipAddress } from '../../../config';
 
 const AssignTablesToWaiter = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const AssignTablesToWaiter = () => {
         const headers = {
           Authorization: `${restoToken}`
         };
-        const response = await axios.post('https://waytrixback.onrender.com/api/Auth/GetTablesByRestoId', { restoId }, { headers });
+        const response = await axios.post(`${ipAddress}/api/Auth/GetTablesByRestoId`, { restoId }, { headers });
         setTables(response.data);
       } catch (error) {
         console.error('Error fetching tables:', error);
@@ -37,7 +38,7 @@ const AssignTablesToWaiter = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post('https://waytrixback.onrender.com/api/Auth/update_waiter_tableId_array', {
+      await axios.post(`${ipAddress}/api/Auth/update_waiter_tableId_array`, {
         _id: id,
         tableId: selectedIds
       });

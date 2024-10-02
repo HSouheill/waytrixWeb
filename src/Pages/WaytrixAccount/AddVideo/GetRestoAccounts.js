@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './GetRestoAccounts.css';
+import { ipAddress } from '../../../config';
 
 const GetRestoAccounts = () => {
   const [restoAccounts, setRestoAccounts] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem('waytrixToken');
-    axios.get('https://waytrixback.onrender.com/api/VideoRoutes/GetAllRestoAccounts', {
+    axios.get(`${ipAddress}/api/VideoRoutes/GetAllRestoAccounts`, {
       headers: {
         Authorization: `${token}`
       }

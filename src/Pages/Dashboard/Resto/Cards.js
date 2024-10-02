@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Cards.css'; // Importing custom CSS for styling
+import { ipAddress } from '../../../config';
 
 const Cards = () => {
   const [surveyData, setSurveyData] = useState(null);
@@ -14,7 +15,7 @@ const Cards = () => {
         };
 
         const response = await axios.post(
-          'https://waytrixback.onrender.com/api/DashBoardRoutes/get_survey_num_by_restoId',
+          `${ipAddress}/api/DashBoardRoutes/get_survey_num_by_restoId`,
           reqBody,
           {
             headers: {

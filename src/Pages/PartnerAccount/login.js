@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ipAddress } from '../../config';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const SignIn = () => {
     };
 
     try {
-      const response = await axios.post('https://waytrixback.onrender.com/api/Auth/partner_login', userData);
+      const response = await axios.post(`${ipAddress}/api/Auth/partner_login`, userData);
       const { token, _id } = response.data;
       localStorage.setItem('partnerId', _id);
       localStorage.setItem('partnerToken', token);

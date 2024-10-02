@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Tablets.module.css';
 import { Link } from 'react-router-dom';
+import { ipAddress } from '../../../config';
 
 const Tablets = () => {
   const { search } = useLocation();
@@ -18,7 +19,7 @@ const Tablets = () => {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const response = await axios.post('https://waytrixback.onrender.com/api/Auth/getTablesByRestoId', { restoId: id });
+        const response = await axios.post(`${ipAddress}/api/Auth/getTablesByRestoId`, { restoId: id });
         if (response.data) {
           setTables(response.data);
         } else {
@@ -39,7 +40,7 @@ const Tablets = () => {
   // Function to delete a table
   const deleteTable = async (tableId) => {
     try {
-      const response = await axios.delete('https://waytrixback.onrender.com/api/Auth/delete-table', { data: { tableId } });
+      const response = await axios.delete(`${ipAddress}/api/Auth/delete-table`, { data: { tableId } });
       if (response.status === 200) {
         setTables(tables.filter((table) => table._id !== tableId));
       } else {
@@ -60,7 +61,7 @@ const Tablets = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://waytrixback.onrender.com/api/Auth/update_table', {
+      const response = await axios.post(`${ipAddress}/api/Auth/update_table`, {
         tableId: editingTable,
         ...formData,
       });

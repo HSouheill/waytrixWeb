@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './GetCustomButtons.css';
+import { ipAddress } from '../../../config';
 
 const GetCustomButtonsScreen = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ const GetCustomButtonsScreen = () => {
       try {
         const waytrixToken = localStorage.getItem('waytrixToken');
         const response = await axios.post(
-          'https://waytrixback.onrender.com/api/ButtonsRoutes/getRestoSpecificCustomButtons',
+          `${ipAddress}/api/ButtonsRoutes/getRestoSpecificCustomButtons`,
           { restoId: id },
           {
             headers: {
@@ -41,14 +42,14 @@ const GetCustomButtonsScreen = () => {
       };
   
       await axios.post(
-        'https://waytrixback.onrender.com/api/ButtonsRoutes/deleteCustomButton',
+        `${ipAddress}/api/ButtonsRoutes/deleteCustomButton`,
         { _id },
         config
       );
   
       // After deletion, fetch updated buttons
       const response = await axios.post(
-        'https://waytrixback.onrender.com/api/ButtonsRoutes/getRestoSpecificCustomButtons',
+        `${ipAddress}/api/ButtonsRoutes/getRestoSpecificCustomButtons`,
         { restoId: id },
         config
       );

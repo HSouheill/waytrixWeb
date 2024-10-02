@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ContactUs.css';
+import { ipAddress } from '../../../config';
 
 const ContactUs = () => {
   const [contacts, setContacts] = useState([]);
@@ -12,7 +13,7 @@ const ContactUs = () => {
         const restoToken = localStorage.getItem('restoToken');
         
         const response = await axios.post(
-          'https://waytrixback.onrender.com/api/ContactUsRoutes/GetContactUs',
+          `${ipAddress}/api/ContactUsRoutes/GetContactUs`,
           { restoId: restoId },
           { headers: { Authorization: `${restoToken}` } }
         );

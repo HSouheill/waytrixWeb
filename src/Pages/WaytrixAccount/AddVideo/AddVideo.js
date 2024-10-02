@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './AddVideo.css';
 import Multer from './multer/multer';
+import { ipAddress } from '../../../config';
 
 const AddVideo = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const AddVideo = () => {
     const fetchPartners = async () => {
       try {
         const waytrixToken = localStorage.getItem('waytrixToken');
-        const { data } = await axios.get('https://waytrixback.onrender.com/api/PartnerAccountRoutes/get_partners', {
+        const { data } = await axios.get(`${ipAddress}/api/PartnerAccountRoutes/get_partners`, {
           headers: {
             Authorization: waytrixToken
           }
@@ -49,7 +50,7 @@ const AddVideo = () => {
     e.preventDefault();
     try {
       const waytrixToken = localStorage.getItem('waytrixToken');
-      const { data } = await axios.post('https://waytrixback.onrender.com/api/VideoRoutes/AddVideo', {
+      const { data } = await axios.post(`${ipAddress}/api/VideoRoutes/AddVideo`, {
         videoURL: formData.videoURL,
         restoId: id,
         maxTimes: formData.maxTimes,

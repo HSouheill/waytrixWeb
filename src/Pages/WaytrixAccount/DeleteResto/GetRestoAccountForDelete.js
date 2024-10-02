@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import './GetRestoAccounts.css';
+import { ipAddress } from '../../../config';
 
 const GetRestoAccounts = () => {
   const [restoAccounts, setRestoAccounts] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem('waytrixToken');
-    axios.get('https://waytrixback.onrender.com/api/VideoRoutes/GetAllRestoAccounts', {
+    axios.get(`${ipAddress}/api/VideoRoutes/GetAllRestoAccounts`, {
       headers: {
         Authorization: `${token}`
       }
@@ -22,7 +23,7 @@ const GetRestoAccounts = () => {
 
   const handleDelete = (restoId) => {
     const token = localStorage.getItem('waytrixToken');
-    axios.post('https://waytrixback.onrender.com/api/Auth/delete_resto', 
+    axios.post(`${ipAddress}/api/Auth/delete_resto`, 
       { restoId },
       {
         headers: {

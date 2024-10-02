@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddMenu.css';
 import Multer from '../../WaytrixAccount/AddVideo/multer/multer'
+import { ipAddress } from '../../../config';
 const AddMenu = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -13,7 +14,7 @@ const AddMenu = () => {
     const data = { restoId, imageLink };
   
     try {
-      await axios.post('https://waytrixback.onrender.com/api/ButtonsRoutes/AddMenu', data, {
+      await axios.post(`${ipAddress}/api/ButtonsRoutes/AddMenu`, data, {
         headers: {
           Authorization: `${restoToken}`
         }

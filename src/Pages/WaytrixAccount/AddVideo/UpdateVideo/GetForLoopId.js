@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './GetForLoopId.css';
 import Multer from '../multer/multer';
+import { ipAddress } from '../../../../config';
 
 export const GetForLoopId = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ export const GetForLoopId = () => {
     const fetchData = async () => {
       try {
         const waytrixToken = localStorage.getItem('waytrixToken');
-        const response = await axios.post('https://waytrixback.onrender.com/api/VideoRoutes/get_one_for_loop_id_video_for_future_update', {
+        const response = await axios.post(`${ipAddress}/api/VideoRoutes/get_one_for_loop_id_video_for_future_update`, {
           restoId: id
         }, {
           headers: {
@@ -47,7 +48,7 @@ export const GetForLoopId = () => {
     
     try {
       const waytrixToken = localStorage.getItem('waytrixToken');
-      await axios.post('https://waytrixback.onrender.com/api/VideoRoutes/update_forLoopId_video_records', {
+      await axios.post(`${ipAddress}/api/VideoRoutes/update_forLoopId_video_records`, {
         forLoopId: video.forLoopId,
         videoURL: video.videoURL,
         maxTimes: video.maxTimes,

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from './NavResto.module.css';
+import { ipAddress } from '../../../config';
 
 const GetRestoAccounts = () => {
   const [restoAccounts, setRestoAccounts] = useState([]);
@@ -17,7 +18,7 @@ const GetRestoAccounts = () => {
 
         // Fetch restaurant accounts
         const { data: accounts } = await axios.get(
-          "https://waytrixback.onrender.com/api/VideoRoutes/GetAllRestoAccounts",
+          `${ipAddress}/api/VideoRoutes/GetAllRestoAccounts`,
           { headers }
         );
         setRestoAccounts(accounts);
@@ -27,7 +28,7 @@ const GetRestoAccounts = () => {
           accounts.map(async (account) => {
             // Fetch waiters
             const waiterResponse = await axios.post(
-              "https://waytrixback.onrender.com/api/Auth/getNumberOfWaitersByRestoId",
+              `${ipAddress}/api/Auth/getNumberOfWaitersByRestoId`,
               { restoId: account._id },
               { headers }
             );
@@ -38,7 +39,7 @@ const GetRestoAccounts = () => {
 
             // Fetch tables
             const tableResponse = await axios.post(
-              "https://waytrixback.onrender.com/api/Auth/getNumberOfTablesByRestoId",
+              `${ipAddress}/api/Auth/getNumberOfTablesByRestoId`,
               { restoId: account._id },
               { headers }
             );
@@ -51,7 +52,7 @@ const GetRestoAccounts = () => {
 
         // Fetch all table locations
         const tableLocationsResponse = await axios.get(
-          "https://waytrixback.onrender.com/api/Auth/GetTableLocations",
+          `${ipAddress}/api/Auth/GetTableLocations`,
           { headers }
         );
         const locations = tableLocationsResponse.data;

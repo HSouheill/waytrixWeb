@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import './UserInfo.css';
 import { PDFDocument, StandardFonts, rgb, PageSizes } from 'pdf-lib';
+import { ipAddress } from '../../../config';
 
 export const UserInfo = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -12,7 +13,7 @@ export const UserInfo = () => {
       try {
         const token = localStorage.getItem('waytrixToken');
         // https://waytrix-backend.onrender.com
-        const response = await axios.get('https://waytrixback.onrender.com/api/DashBoardRoutes/total_customers_info_for_waytrix', {
+        const response = await axios.get(`${ipAddress}/api/DashBoardRoutes/total_customers_info_for_waytrix`, {
           headers: {
             Authorization: token
           }

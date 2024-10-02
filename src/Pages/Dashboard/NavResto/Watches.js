@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Tablets.module.css';
 import { Link } from 'react-router-dom';
+import { ipAddress } from '../../../config';
 
 const Watches = () => {
   const { search } = useLocation();
@@ -18,7 +19,7 @@ const Watches = () => {
   useEffect(() => {
     const fetchWaiters = async () => {
       try {
-        const response = await axios.post('https://waytrixback.onrender.com/api/Auth/waiters', { restoId: id });
+        const response = await axios.post(`${ipAddress}/api/Auth/waiters`, { restoId: id });
         if (response.data) {
           setWaiters(response.data);
         } else {
@@ -39,7 +40,7 @@ const Watches = () => {
   // Function to delete a waiter
   const deleteWaiter = async (waiterId) => {
     try {
-      const response = await axios.delete('https://waytrixback.onrender.com/api/Auth/delete-waiter', { data: { waiterId } });
+      const response = await axios.delete(`${ipAddress}/api/Auth/delete-waiter`, { data: { waiterId } });
       if (response.status === 200) {
         setWaiters(waiters.filter((waiter) => waiter._id !== waiterId));
       } else {
@@ -60,7 +61,7 @@ const Watches = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://waytrixback.onrender.com/api/Auth/updateWaiter', {
+      const response = await axios.post(`${ipAddress}/api/Auth/updateWaiter`, {
         waiterId: editingWaiter,
         ...formData,
       });

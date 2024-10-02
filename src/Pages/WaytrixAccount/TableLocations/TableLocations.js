@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TableLocations.css';
+import { ipAddress } from '../../../config';
 
 const TableLocations = () => {
   const [locations, setLocations] = useState([]);
@@ -15,7 +16,7 @@ const TableLocations = () => {
           }
         };
   
-        const response = await axios.get('https://waytrixback.onrender.com/api/Auth/GetTableLocations', config);
+        const response = await axios.get(`${ipAddress}/api/Auth/GetTableLocations`, config);
         setLocations(response.data);
       } catch (error) {
         console.error('Error fetching locations:', error);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AddResto.css';
+import { ipAddress } from '../../config';
 
 const AddResto = () => {
   const [name, setName] = useState('');
@@ -19,7 +20,7 @@ const AddResto = () => {
       const waytrixToken = localStorage.getItem('waytrixToken'); // Get waytrixToken from localStorage
   
       const response = await axios.post(
-        'https://waytrixback.onrender.com/api/Auth/signupResto',
+        `${ipAddress}/api/Auth/signupResto`,
         {
           name,
           email,

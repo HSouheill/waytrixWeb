@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AddVoucher.css';
 import Multer from '../AddVideo/multer/multer';
+import { ipAddress } from '../../../config';
 
 const AddVoucher = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const AddVoucher = () => {
             Authorization: `${waytrixToken}`
           }
         };
-        const response = await axios.get('https://waytrixback.onrender.com/api/PartnerAccountRoutes/partner_get_resto_account', config);
+        const response = await axios.get(`${ipAddress}/api/PartnerAccountRoutes/partner_get_resto_account`, config);
         setRestaurants(response.data);
       } catch (error) {
         console.error('Error fetching restaurants:', error);
@@ -75,7 +76,7 @@ const AddVoucher = () => {
           Authorization: `${waytrixToken}`
         }
       };
-      const response = await axios.post('https://waytrixback.onrender.com/api/ContactUsRoutes/AddVoucher', formData, config);
+      const response = await axios.post(`${ipAddress}/api/ContactUsRoutes/AddVoucher`, formData, config);
       console.log(response.data);
       setShowModal(true);
       setTimeout(() => {

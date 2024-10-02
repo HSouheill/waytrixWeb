@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ipAddress } from '../../../config';
 
 const AddWaiter = () => {
   const [restoToken, setRestoToken] = useState('');
@@ -51,7 +52,7 @@ const AddWaiter = () => {
       }
   
       const response = await axios.post(
-        'https://waytrixback.onrender.com/api/Auth/signupWaiter',
+        `${ipAddress}/api/Auth/signupWaiter`,
         data,
         {
           headers: {

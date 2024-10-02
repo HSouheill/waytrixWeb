@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ipAddress } from '../../../config';
 
 const AddTablet = () => {
   const [restoToken, setRestoToken] = useState('');
@@ -42,7 +43,7 @@ const AddTablet = () => {
       const waytrixToken = localStorage.getItem('waytrixToken');
   
       const response = await axios.post(
-        'https://waytrixback.onrender.com/api/Auth/signupTableValet',
+        `${ipAddress}/api/Auth/signupTableValet`,
         data,
         {
           headers: {

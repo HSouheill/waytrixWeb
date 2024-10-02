@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './GetInfo.css'; // Import the custom styles
+import { ipAddress } from '../../../config';
 
 export const GetInfo = () => {
   const [totalRestoNum, setTotalRestoNum] = useState(null);
@@ -18,7 +19,7 @@ export const GetInfo = () => {
 
         const fetchRestoData = async () => {
           const responseResto = await axios.get(
-            'https://waytrixback.onrender.com/api/DashBoardRoutes/total_resto_num_for_waytrix',
+            `${ipAddress}/api/DashBoardRoutes/total_resto_num_for_waytrix`,
             {
               headers: {
                 Authorization: waytrixToken
@@ -32,7 +33,7 @@ export const GetInfo = () => {
 
         const fetchTableData = async () => {
           const responseTable = await axios.get(
-            'https://waytrixback.onrender.com/api/DashBoardRoutes/total_table_num_for_waytrix',
+            `${ipAddress}/api/DashBoardRoutes/total_table_num_for_waytrix`,
             {
               headers: {
                 Authorization: waytrixToken
@@ -46,7 +47,7 @@ export const GetInfo = () => {
 
         const fetchWaiterData = async () => {
           const responseWaiter = await axios.get(
-            'https://waytrixback.onrender.com/api/DashBoardRoutes/total_waiter_num_for_waytrix',
+            `${ipAddress}/api/DashBoardRoutes/total_waiter_num_for_waytrix`,
             {
               headers: {
                 Authorization: waytrixToken
@@ -60,7 +61,7 @@ export const GetInfo = () => {
 
         const fetchCarsData = async () => {
           const responseCars = await axios.get(
-            'https://waytrixback.onrender.com/api/DashBoardRoutes/total_cars_num_for_waytrix',
+            `${ipAddress}/api/DashBoardRoutes/total_cars_num_for_waytrix`,
             {
               headers: {
                 Authorization: waytrixToken
@@ -74,7 +75,7 @@ export const GetInfo = () => {
 
         const fetchContactUsClickData = async () => {
           const responseContactUs = await axios.get(
-            'https://waytrixback.onrender.com/api/DashBoardRoutes/get_total_contact_us_click_for_waytrix',
+            `${ipAddress}/api/DashBoardRoutes/get_total_contact_us_click_for_waytrix`,
             {
               headers: {
                 Authorization: waytrixToken
@@ -88,7 +89,7 @@ export const GetInfo = () => {
 
         const fetchValetData = async () => {
           const responseValet = await axios.get(
-            'https://waytrixback.onrender.com/api/DashBoardRoutes/total_valet_num_for_waytrix',
+            `${ipAddress}/api/DashBoardRoutes/total_valet_num_for_waytrix`,
             {
               headers: {
                 Authorization: waytrixToken
@@ -102,7 +103,7 @@ export const GetInfo = () => {
 
         const fetchTabletData = async () => {
           const responseTablet = await axios.get(
-            'https://waytrixback.onrender.com/api/DashBoardRoutes/total_tablet_num_for_waytrix',
+            `${ipAddress}/api/DashBoardRoutes/total_tablet_num_for_waytrix`,
             {
               headers: {
                 Authorization: waytrixToken

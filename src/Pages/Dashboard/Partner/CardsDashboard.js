@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CardsDashboard.css';
+import { ipAddress } from '../../../config';
 
 const PartnerDashboard = () => {
   const [videoData, setVideoData] = useState(null);
@@ -10,7 +11,7 @@ const PartnerDashboard = () => {
   useEffect(() => {
     const fetchVideoData = async () => {
       try {
-        const response = await axios.post('https://waytrixback.onrender.com/api/PartnerAccountRoutes/get_total_video_num', { _id: partnerId }, {
+        const response = await axios.post(`${ipAddress}/api/PartnerAccountRoutes/get_total_video_num`, { _id: partnerId }, {
           headers: {
             Authorization: `${partnerToken}`
           }

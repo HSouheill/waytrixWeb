@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './DeletePartner.css';
+import { ipAddress } from '../../../config';
 
 const DeletePartner = () => {
     const [partners, setPartners] = useState([]);
@@ -8,7 +9,7 @@ const DeletePartner = () => {
     useEffect(() => {
         const token = localStorage.getItem('waytrixToken');
         if (token) {
-            axios.get('https://waytrixback.onrender.com/api/ContactUsRoutes/GetAllPartners', {
+            axios.get(`${ipAddress}/api/ContactUsRoutes/GetAllPartners`, {
                 headers: {
                     Authorization: `${token}`
                 }
@@ -25,7 +26,7 @@ const DeletePartner = () => {
 
     const handleDelete = (partnerId) => {
         const token = localStorage.getItem('waytrixToken');
-        axios.delete('https://waytrixback.onrender.com/api/ContactUsRoutes/DeletePartner', {
+        axios.delete(`${ipAddress}/api/ContactUsRoutes/DeletePartner`, {
             headers: {
                 Authorization: `${token}`
             },

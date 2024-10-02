@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './multer.css';
-import ipAddress from '../../../../config';
+import { ipAddress } from '../../../../config';
 
 function ImageUpload() {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -17,7 +17,7 @@ function ImageUpload() {
         formData.append('image', selectedFile);
 
         try {
-            const response = await axios.post(`https://waytrixback.onrender.com/upload/multer`, formData, {
+            const response = await axios.post(`${ipAddress}/upload/multer`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

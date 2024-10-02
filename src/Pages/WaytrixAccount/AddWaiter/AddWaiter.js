@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { ipAddress } from '../../../config';
 
 const AddWaiterValet = () => {
   const [restoToken, setRestoToken] = useState('');
@@ -33,7 +34,7 @@ const AddWaiterValet = () => {
   
     try {
       const waytrixToken = localStorage.getItem('waytrixToken'); // Get token from localStorage
-      const response = await axios.post('https://waytrixback.onrender.com/api/Auth/signupWaiter', data, {
+      const response = await axios.post(`${ipAddress}/api/Auth/signupWaiter`, data, {
         headers: {
           Authorization: `${waytrixToken}` // Use waytrixToken for Authorization
         }

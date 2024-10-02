@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './AddButtons.css';
+import { ipAddress } from '../../../config';
 
 const AddButtons = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const AddButtons = () => {
   const handleSubmit = () => {
     const waytrixToken = localStorage.getItem('waytrixToken');
   
-    axios.post('https://waytrixback.onrender.com/api/ButtonsRoutes/AddBooleanButtons', {
+    axios.post(`${ipAddress}/api/ButtonsRoutes/AddBooleanButtons`, {
       restoId: id,
       Napkins: napkins,
       Sugar: sugar,

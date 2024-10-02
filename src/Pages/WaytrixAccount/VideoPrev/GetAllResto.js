@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ipAddress } from '../../../config';
 
 const GetRestoAccounts = () => {
   const [restoAccounts, setRestoAccounts] = useState([]);
 
   useEffect(() => {
     const waytrixToken = localStorage.getItem('waytrixToken');
-    axios.get('https://waytrixback.onrender.com/api/VideoRoutes/GetAllRestoAccounts', {
+    axios.get(`${ipAddress}/api/VideoRoutes/GetAllRestoAccounts`, {
       headers: {
         Authorization: `${waytrixToken}`
       }
@@ -23,7 +24,7 @@ const GetRestoAccounts = () => {
 
   const handleCardClick = async (restoId) => {
     try {
-      const response = await axios.post('https://waytrixback.onrender.com/api/VideoRoutes/getAllTablesByRestoId', {
+      const response = await axios.post(`${ipAddress}/api/VideoRoutes/getAllTablesByRestoId`, {
         restoId
       });
       const tableId = response.data._id;

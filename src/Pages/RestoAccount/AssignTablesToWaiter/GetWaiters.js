@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './GetWaiters.css';
+import { ipAddress } from '../../../config';
 
 const GetWaiters = () => {
   const [waiters, setWaiters] = useState([]);
@@ -14,7 +15,7 @@ const GetWaiters = () => {
   
       try {
         const response = await axios.post(
-          'https://waytrixback.onrender.com/api/Auth/GetWaytersByRestoId',
+          `${ipAddress}/api/Auth/GetWaytersByRestoId`,
           { restoId },
           {
             headers: {

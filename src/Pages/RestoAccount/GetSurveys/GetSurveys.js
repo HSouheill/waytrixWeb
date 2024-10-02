@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './GetSurveys.css';
+import { ipAddress } from '../../../config';
 
 const GetSurveys = () => {
   const [surveys, setSurveys] = useState([]);
@@ -11,7 +12,7 @@ const GetSurveys = () => {
         const restoId = localStorage.getItem('restoId');
         const restoToken = localStorage.getItem('restoToken'); // Assuming 'tableToken' is correct
         const response = await axios.post(
-          'https://waytrixback.onrender.com/api/ContactUsRoutes/GetAllSurveys',
+          `${ipAddress}/api/ContactUsRoutes/GetAllSurveys`,
           { restoId },
           {
             headers: {
