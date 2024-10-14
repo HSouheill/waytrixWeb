@@ -5,6 +5,7 @@ import { ipAddress } from '../../../config';
 
 const PartnerDashboard = () => {
   const [videoData, setVideoData] = useState(null);
+  const [totalVideos, setTotalVideos] = useState(0); // State for total videos
   const partnerToken = localStorage.getItem('partnerToken');
   const partnerId = localStorage.getItem('partnerId');
 
@@ -12,7 +13,18 @@ const PartnerDashboard = () => {
   const pieChartRef = useRef(null);
   const lineChartRef = useRef(null);
 
+  const fetchTotalVideos = async () => {
+    try {
+      const response = await axios.post(`${ipAddress}/api/VideoRoutes/getTotalVideosForPartner`, { partnerId });
+      setTotalVideos(response.data.totalVideos); // Assuming your API returns { totalVideos: <number> }
+    } catch (error) {
+      console.error('Error fetching total videos:', error);
+    }
+  };
+
   useEffect(() => {
+    fetchTotalVideos(); // Fetch total videos when the component mounts
+
     const fetchVideoData = async () => {
       try {
         const response = await axios.post(`${ipAddress}/api/PartnerAccountRoutes/get_total_video_num`, { _id: partnerId }, {
@@ -38,7 +50,7 @@ const PartnerDashboard = () => {
           labels: ['Total Video Number'],
           datasets: [{
             label: 'Total Video Number',
-            data: [videoData.TotalVideoNum],
+            data: [totalVideos], // Use the fetched total videos
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1
@@ -80,7 +92,7 @@ const PartnerDashboard = () => {
           datasets: [
             {
               label: 'Total Video Number',
-              data: [videoData.TotalVideoNum, 0],
+              data: [totalVideos, 0], // Use the fetched total videos
               fill: false,
               borderColor: 'rgba(75, 192, 192, 1)',
               tension: 0.1
@@ -96,7 +108,7 @@ const PartnerDashboard = () => {
         }
       });
     }
-  }, [videoData]);
+  }, [videoData, totalVideos]); // Add totalVideos as a dependency
 
   return (
     <div style={{

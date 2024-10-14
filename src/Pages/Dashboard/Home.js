@@ -8,6 +8,7 @@ import RestoCardsInfo from './Resto/Cards'
 import PartnerDashboard from './Partner/CardsDashboard'
 import NumOfVideosOfEahResto from './Partner/NumOfVideosOfEahResto'
 import PartnerCharts from './Partner/Charts'
+//import WaytrixCharts2 from './Waytrix/Charts2';
 const Home = () => {
   const [waytrixToken, setWaytrixToken] = useState(localStorage.getItem('waytrixToken'));
   const [restoToken, setRestoToken] = useState(localStorage.getItem('restoToken'));

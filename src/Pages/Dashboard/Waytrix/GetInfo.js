@@ -154,9 +154,9 @@ export const GetInfo = () => {
       <div className="card">
         <h1>Total Valet Num: {totalValetNum}</h1>
       </div>
-      <div className="card">
+      {/* <div className="card">
         <h1>Total Tablets Num: {totalTabletsNum}</h1>
-      </div>
+      </div> redundant*/}
     </div>
   );
 };

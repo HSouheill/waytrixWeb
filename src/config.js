@@ -1,3 +1,3 @@
-export const ipAddress = 'http://192.168.1.100:3030'; // Change this to your actual IP address
+export const ipAddress = 'https://waytrixback.onrender.com'; // Change this to your actual IP address
 
 

@@ -3,7 +3,7 @@ import Chart from 'chart.js/auto';
 import './Charts.css'; // Assuming this is your CSS file for custom styling
 import { ipAddress } from '../../../config';
 
-const Charts = () => {
+const Charts2 = () => {
   const [stats, setStats] = useState({
     totalRestoNum: localStorage.getItem('totalRestoNum') || 0,
     totalTableNum: localStorage.getItem('totalTableNum') || 0,
@@ -15,15 +15,29 @@ const Charts = () => {
   });
 
   const [maleCustomerCounts, setMaleCustomerCounts] = useState([]);
-  const [femaleCustomerCounts, setFemaleCustomerCounts] = useState([]); // New state for female counts
   
   const lineChartRef = useRef(null);
   const barChartRef = useRef(null);
-  const femaleBarChartRef = useRef(null); // New ref for female bar chart
   const pieChartRef = useRef(null);
   const additionalBarChartRef = useRef(null); // New ref for the additional bar chart
 
-  // Function to fetch male customer counts
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStats({
+        totalRestoNum: localStorage.getItem('totalRestoNum') || 0,
+        totalTableNum: localStorage.getItem('totalTableNum') || 0,
+        totalWaiterNum: localStorage.getItem('totalWaiterNum') || 0,
+        totalNumberOfCars: localStorage.getItem('totalNumberOfCars') || 0,
+        totalContactUsClick: localStorage.getItem('totalContactUsClick') || 0,
+        totalValetNum: localStorage.getItem('totalValetNum') || 0,
+        totalTabletsNum: localStorage.getItem('totalTabletsNum') || 0,
+      });
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Fetch male customer counts from the API
   const fetchMaleCustomerCounts = async () => {
     try {
       const response = await fetch(`${ipAddress}/api/Auth/getMaleCustomerCountByAgeGroup`, {
@@ -40,52 +54,8 @@ const Charts = () => {
     }
   };
 
-  // Function to fetch female customer counts
-  const fetchFemaleCustomerCounts = async () => {
-    try {
-      const response = await fetch(`${ipAddress}/api/Auth/getFemaleCustomerCountByAgeGroup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({}),
-      });
-      const data = await response.json();
-      setFemaleCustomerCounts(data);
-    } catch (error) {
-      console.error('Error fetching female customer counts:', error);
-    }
-  };
-
   useEffect(() => {
-    // Fetch initial male and female customer counts
-    fetchMaleCustomerCounts();
-    fetchFemaleCustomerCounts();
-
-    // Set intervals to refresh counts
-    const interval = setInterval(() => {
-      fetchMaleCustomerCounts();
-      fetchFemaleCustomerCounts();
-    }, 10000); // Adjust the interval as needed
-
-    // Clear interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStats({
-        totalRestoNum: localStorage.getItem('totalRestoNum') || 0,
-        totalTableNum: localStorage.getItem('totalTableNum') || 0,
-        totalWaiterNum: localStorage.getItem('totalWaiterNum') || 0,
-        totalNumberOfCars: localStorage.getItem('totalNumberOfCars') || 0,
-        totalContactUsClick: localStorage.getItem('totalContactUsClick') || 0,
-        totalValetNum: localStorage.getItem('totalValetNum') || 0,
-        totalTabletsNum: localStorage.getItem('totalTabletsNum') || 0,
-      });
-    }, 10000);
-
-    return () => clearInterval(interval);
+    fetchMaleCustomerCounts(); // Call the function when the component mounts
   }, []);
 
   useEffect(() => {
@@ -145,7 +115,7 @@ const Charts = () => {
           window.myBarChart.destroy();
         }
 
-        // Prepare the data for the male bar chart
+        // Prepare the data for the bar chart
         const labels = maleCustomerCounts.map(item => item.ageGroup);
         const data = maleCustomerCounts.map(item => item.count);
 
@@ -155,7 +125,7 @@ const Charts = () => {
             labels: labels,
             datasets: [
               {
-                label: 'Male Customers Age Groups',
+                label: 'Male Customer Counts by Age Group',
                 data: data,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -174,44 +144,6 @@ const Charts = () => {
       }
     }
   }, [maleCustomerCounts]);
-
-  useEffect(() => {
-    if (femaleBarChartRef.current) {
-      const ctx = femaleBarChartRef.current.getContext('2d');
-      if (ctx) {
-        if (window.myFemaleBarChart !== undefined) {
-          window.myFemaleBarChart.destroy();
-        }
-
-        // Prepare the data for the female bar chart
-        const labels = femaleCustomerCounts.map(item => item.ageGroup);
-        const data = femaleCustomerCounts.map(item => item.count);
-
-        window.myFemaleBarChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: 'Female Customers Age Groups',
-                data: data,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
-      }
-    }
-  }, [femaleCustomerCounts]);
 
   useEffect(() => {
     if (additionalBarChartRef.current) {
@@ -244,8 +176,8 @@ const Charts = () => {
                   stats.totalValetNum,
                   stats.totalTabletsNum
                 ],
-                backgroundColor: 'rgba(75, 192, 75, 0.2)', // Change to a green background
-                borderColor: 'rgba(75, 192, 75, 1)', // Change to a darker green border
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1,
               },
             ],
@@ -320,9 +252,6 @@ const Charts = () => {
         <canvas ref={barChartRef} id="barChartUnique" width="300" height="300"></canvas>
       </div>
       <div className="chart-item">
-        <canvas ref={femaleBarChartRef} id="femaleBarChartUnique" width="300" height="300"></canvas> {/* New female bar chart */}
-      </div>
-      <div className="chart-item">
         <canvas ref={pieChartRef} id="pieChartUnique" width="300" height="300"></canvas>
       </div>
       <div className="chart-item">
@@ -332,4 +261,4 @@ const Charts = () => {
   );
 };
 
-export default Charts;
+export default Charts2;

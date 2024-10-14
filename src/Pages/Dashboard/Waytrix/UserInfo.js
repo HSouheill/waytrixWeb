@@ -181,7 +181,9 @@ export const UserInfo = () => {
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Password</th>
+            <th>Gender</th>
+            <th>Age</th>
+            {/* <th>Password</th> */}
             <th>Role</th>
             <th>Verified</th>
           </tr>
@@ -193,7 +195,9 @@ export const UserInfo = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.phone}</td>
-              <td>{user.password}</td>
+              <td>{user.gender}</td>
+              <td>{user.age}</td>
+              {/* <td>{user.password}</td> */}
               <td>{user.role}</td>
               <td>{user.verified ? 'Yes' : 'No'}</td>
             </tr>

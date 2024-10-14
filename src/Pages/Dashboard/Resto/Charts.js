@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Bar, Pie, Line, Doughnut } from 'react-chartjs-2';
 import { ipAddress } from '../../../config';
-
 import './Cards.css'; // Import CSS for styling
 
 export const Cards = () => {
   const [surveyData, setSurveyData] = useState(null);
+  const [maleCustomerCounts, setMaleCustomerCounts] = useState([]);
+  const [femaleCustomerCounts, setFemaleCustomerCounts] = useState([]); // New state for female counts
+  const maleBarChartRef = useRef(null);
+  const femaleBarChartRef = useRef(null); // New ref for female chart
 
   useEffect(() => {
     const fetchSurveyData = async () => {
@@ -15,7 +18,7 @@ export const Cards = () => {
         const reqBody = {
           restoId: localStorage.getItem('restoId')
         };
-  
+
         const response = await axios.post(
           `${ipAddress}/api/DashBoardRoutes/get_survey_num_by_restoId`,
           reqBody,
@@ -25,24 +28,74 @@ export const Cards = () => {
             }
           }
         );
-  
+
         setSurveyData(response.data);
       } catch (error) {
         console.error('Error fetching survey data:', error);
       }
     };
-  
+
+    const fetchMaleCustomerCounts = async () => {
+      try {
+        const response = await fetch(`${ipAddress}/api/Auth/getMaleCustomerCountByAgeGroupTotalSigned`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({}), // If any data is needed in the request body, include it here
+        });
+        const data = await response.json();
+        
+        const formattedData = data.map(item => ({
+          ageGroup: item.ageGroup,
+          count: item.totalTimesSigned // Now using totalTimesSigned instead of count
+        }));
+    
+        setMaleCustomerCounts(formattedData);
+      } catch (error) {
+        console.error('Error fetching male customer counts:', error);
+      }
+    };
+
+    const fetchFemaleCustomerCounts = async () => { // New function for fetching female counts
+      try {
+        const response = await fetch(`${ipAddress}/api/Auth/getFemaleCustomerCountByAgeGroupTotalSigned`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({}), // If any data is needed in the request body, include it here
+        });
+        const data = await response.json();
+
+        const formattedData = data.map(item => ({
+          ageGroup: item.ageGroup,
+          count: item.totalTimesSigned // Now using totalTimesSigned instead of count
+        }));
+
+        setFemaleCustomerCounts(formattedData);
+      } catch (error) {
+        console.error('Error fetching female customer counts:', error);
+      }
+    };
+
     // Fetch data initially when component mounts
     fetchSurveyData();
-  
+    fetchMaleCustomerCounts();
+    fetchFemaleCustomerCounts(); // Fetch female counts too
+
     // Fetch data every 10 seconds
-    const interval = setInterval(fetchSurveyData, 10000);
-  
+    const interval = setInterval(() => {
+      fetchSurveyData();
+      fetchMaleCustomerCounts();
+      fetchFemaleCustomerCounts(); // Fetch female counts too
+    }, 10000);
+
     // Clean up interval to prevent memory leaks
     return () => clearInterval(interval);
   }, []); // Empty dependency array ensures this effect runs only once on mount
-  
 
+  // Chart data for the main dashboard
   const chartData = {
     labels: [
       'Survey Count',
@@ -88,6 +141,42 @@ export const Cards = () => {
     ]
   };
 
+  // Chart data for male customers by age group
+  const maleCustomerChartData = {
+    labels: maleCustomerCounts.map(item => item.ageGroup),
+    datasets: [
+      {
+        label: 'Total Male Logins Per Age',
+        data: maleCustomerCounts.map(item => item.count), // Now using totalTimesSigned as count
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+      }
+    ]
+  };
+
+  const maleChartOptions = {
+    maintainAspectRatio: false, // This allows the chart to expand to the container's height
+  };
+
+  // Chart data for female customers by age group
+  const femaleCustomerChartData = { // New chart data for females
+    labels: femaleCustomerCounts.map(item => item.ageGroup),
+    datasets: [
+      {
+        label: 'Total Female Logins Per Age',
+        data: femaleCustomerCounts.map(item => item.count), // Now using totalTimesSigned as count
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+      }
+    ]
+  };
+
+  const femaleChartOptions = {
+    maintainAspectRatio: false, // This allows the chart to expand to the container's height
+  };
+  
   return (
     <div className="cards-container">
       {surveyData && (
@@ -103,6 +192,12 @@ export const Cards = () => {
           </div>
           <div className="chart-item">
             <Doughnut data={chartData} />
+          </div>
+          <div className="chart-item male-bar-chart">
+            <Bar data={maleCustomerChartData} options={maleChartOptions} ref={maleBarChartRef} />
+          </div>
+          <div className="chart-item female-bar-chart">
+            <Bar data={femaleCustomerChartData} options={femaleChartOptions} ref={femaleBarChartRef} />
           </div>
         </div>
       )}

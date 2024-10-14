@@ -60,7 +60,7 @@ export const NumOfVideosOfEahResto = () => {
           <div className="restaurant-name">{restaurant.name}</div>
           <div className="restaurant-email">{restaurant.email}</div>
           <div className="restaurant-phone">{restaurant.phone}</div>
-          <div className="total-max-times" style={{fontWeight:'bold',textTransform:'uppercase'}}>Num Of Videos IN Each Resto Per Day: <br/> <span style={{fontSize:42,color:'#a6a6a6', fontWeight:'bold', fontStyle:'italic'}}>{restaurant.totalMaxTimes}</span></div>
+          {/* <div className="total-max-times" style={{fontWeight:'bold',textTransform:'uppercase'}}>Num Of Videos IN Each Resto Per Day: <br/> <span style={{fontSize:42,color:'#a6a6a6', fontWeight:'bold', fontStyle:'italic'}}>{restaurant.totalMaxTimes}</span></div> */}
           
           <div className="winned-vouchers">Redeemed Vouchers: <br/> <span style={{fontSize:42,color:'#a6a6a6', fontWeight:'bold', fontStyle:'italic'}}>{restaurant.winnedVouchers ? restaurant.winnedVouchers:0}</span></div>
         </div>

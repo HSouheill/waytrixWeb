@@ -29,6 +29,11 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     overflow: hidden;
   }
+
+  /* Add specific classes for male and female bar charts to make them taller */
+  .male-bar-chart, .female-bar-chart {
+    height: 600px; /* Or whatever height you prefer */
+  }
   
   @media (max-width: 1200px) {
     .chart-item {

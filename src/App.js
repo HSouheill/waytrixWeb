@@ -42,6 +42,8 @@ import Sequence from './Pages/Dashboard/NavResto/Sequence';
 import AddVideoSeq from './Pages/Dashboard/NavResto/AddVideoSeq';
 import Watches from './Pages/Dashboard/NavResto/Watches';
 import AddWatch from './Pages/Dashboard/NavResto/AddWatch';
+import ViewTables from './Pages/RestoAccount/ViewTables/ViewTables';
+import AddTablet2 from './Pages/RestoAccount/ViewTables/AddTablet2';
 function App() {
   const [waytrixToken, setWaytrixToken] = useState(localStorage.getItem('waytrixToken') || '');
   const [restoToken, setRestoToken] = useState(localStorage.getItem('restoToken') || '');
@@ -158,6 +160,8 @@ function App() {
             <Route path="/GetWaiters" element={<GetWaiters />} />
             <Route path="/AssignTablesToWaiter/:id" element={<AssignTablesToWaiter />} />
             <Route path="/GetSurveys" element={<GetSurveys />} />
+            <Route path="/ViewTables" element={<ViewTables />} />
+            <Route path="/AddTablet2" element={<AddTablet2 />} />
 
             </>
             :
