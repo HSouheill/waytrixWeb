@@ -147,7 +147,7 @@ const Navbar = () => {
                 <ul className="sub-menu">
                   <li className='aSubTitle'>    <Link className='Link' to="/NavResto">Resto</Link></li>
                   <li className='aSubTitle'>    <Link className='Link' to="/AddResto">Add Resto</Link></li>
-                  <li className='aSubTitle'>    <Link className='Link' to="/GetRestoAcounts">Add Video</Link></li>
+                  {/* <li className='aSubTitle'>    <Link className='Link' to="/GetRestoAcounts">Add Video</Link></li> */}
                   <li className='aSubTitle'>    <Link className='Link' to="/AddPartners">Add Partners</Link></li>
                   <li className='aSubTitle'>    <Link className='Link' to="/AddVoucher">Add Voucher</Link></li>
                   <li className='aSubTitle'>    <Link className='Link' to="/GetRestoAccountButtons">Add Buttons</Link></li>
@@ -155,7 +155,7 @@ const Navbar = () => {
                   <li className='aSubTitle'>    <Link className='Link' to="/AddCustomButtons">Add Custom Buttons</Link></li>
                   <li className='aSubTitle'>    <Link className='Link' to="/GetAllRestoForVidPrev">Video Preview</Link></li>
                   {/* <li className='aSubTitle'>    <Link className='Link' to="/GetRestoForAddTableOrValet">Add Table Or Valet</Link></li> */}
-                  <li className='aSubTitle'>    <Link className='Link' to="/getTableAccounts">Add Waiter</Link></li>
+                  {/* <li className='aSubTitle'>    <Link className='Link' to="/getTableAccounts">Add Waiter</Link></li> */}
                   {/* <li className='aSubTitle'>    <Link className='Link' to="/GetRestoAccountForVideoUpdate">Update Video</Link></li> */}
                   <li className='aSubTitle'>    <Link className='Link' to="/GetRestoAccountForDelete">Delete Resto</Link></li>
 

@@ -5,8 +5,8 @@ import { ipAddress } from '../../../config';
 
 const AddTablet = () => {
   const [restoToken, setRestoToken] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState(''); // Name input
+  const [email, setEmail] = useState(''); // Email input
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('table');
@@ -31,9 +31,9 @@ const AddTablet = () => {
     }
 
     const data = {
-      name: role === 'table' ? email : name,
-      email,
-      phone: role === 'table' ? 1234567890 : phone,
+      name, // Store the name input
+      email, // Store the email input
+      phone: role === 'table' ? 1234567890 : phone, // Default phone number for role 'table'
       password,
       role,
       restoId
@@ -69,18 +69,22 @@ const AddTablet = () => {
         {role !== 'table' && (
           <>
             <label>
-              Name:
+              Name: {/* Name input */}
               <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>
-              Phone:
+              Phone: {/* Phone input */}
               <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} />
             </label>
           </>
         )}
         <label>
-          {role === 'table' ? 'Num:' : 'Email:'}
-          <input type={role === 'table' ? 'text' : 'email'} value={email} onChange={(e) => setEmail(e.target.value)} />
+              Num: {/* Name input */}
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <label>
+          Email: {/* Email input */}
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
         <label>
           Password:

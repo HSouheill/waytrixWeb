@@ -117,7 +117,7 @@ const ViewTables = () => {
               <th>ID</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Phone</th>
+              {/* <th>Phone</th> */}
               <th>IP</th>
               <th>Password</th>
               <th>Actions</th>
@@ -129,7 +129,7 @@ const ViewTables = () => {
                 <td>{table._id}</td>
                 <td>{table.name}</td>
                 <td>{table.email}</td>
-                <td>{table.phone}</td>
+                {/* <td>{table.phone}</td> */}
                 <td>{table.ip}</td>
                 <td>{table.password}</td>
                 <td>
@@ -142,9 +142,9 @@ const ViewTables = () => {
         </table>
       )}
 
-      <div className={styles.addRestoButtonContainer}>
+      {/* <div className={styles.addRestoButtonContainer}>
         <Link className={styles.link} to={`/AddTablet2?restoId=${localStorage.getItem('restoId')}`}>Add Tablet</Link>
-      </div>
+      </div> */}
     </div>
   );
 };

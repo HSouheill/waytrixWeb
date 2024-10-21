@@ -156,8 +156,31 @@ export const Cards = () => {
   };
 
   const maleChartOptions = {
-    maintainAspectRatio: false, // This allows the chart to expand to the container's height
-  };
+    maintainAspectRatio: false,
+  scales: {
+    x: {
+      ticks: {
+        color: 'white', // Set x-axis labels to white
+      },
+    },
+    y: {
+      ticks: {
+        color: 'white', // Set y-axis labels to white
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: 'white', // Set legend text to white
+      },
+    },
+    tooltip: {
+      bodyColor: 'white', // Set tooltip text to white
+      titleColor: 'white',
+    },
+  },
+};
 
   // Chart data for female customers by age group
   const femaleCustomerChartData = { // New chart data for females
@@ -174,25 +197,77 @@ export const Cards = () => {
   };
 
   const femaleChartOptions = {
-    maintainAspectRatio: false, // This allows the chart to expand to the container's height
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: {
+          color: 'white', // Set x-axis labels to white
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white', // Set y-axis labels to white
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: 'white', // Set legend text to white
+        },
+      },
+      tooltip: {
+        bodyColor: 'white', // Set tooltip text to white
+        titleColor: 'white',
+      },
+    },
   };
   
+  
+     // General chart options to set text color to white
+     const commonChartOptions = {
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          ticks: {
+            color: 'white', // Set x-axis labels to white
+          },
+        },
+        y: {
+          ticks: {
+            color: 'white', // Set y-axis labels to white
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: 'white', // Set legend text to white
+          },
+        },
+        tooltip: {
+          bodyColor: 'white', // Set tooltip text to white
+          titleColor: 'white',
+        },
+      },
+    };
+
   return (
     <div className="cards-container">
       {surveyData && (
         <div className="charts-container">
+          {/* <div className="chart-item">
+            <Bar data={chartData} options={commonChartOptions}/>
+          </div> */}
           <div className="chart-item">
-            <Bar data={chartData} />
+            <Pie data={chartData} options={commonChartOptions}/>
+          </div>
+          {/* <div className="chart-item">
+            <Line data={chartData} options={commonChartOptions}/>
           </div>
           <div className="chart-item">
-            <Pie data={chartData} />
-          </div>
-          <div className="chart-item">
-            <Line data={chartData} />
-          </div>
-          <div className="chart-item">
-            <Doughnut data={chartData} />
-          </div>
+            <Doughnut data={chartData} options={commonChartOptions}/>
+          </div> */}
           <div className="chart-item male-bar-chart">
             <Bar data={maleCustomerChartData} options={maleChartOptions} ref={maleBarChartRef} />
           </div>

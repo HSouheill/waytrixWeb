@@ -20,6 +20,7 @@ const AddVideoSeq = () => {
   const [selectedPartner, setSelectedPartner] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [totalDuration, setTotalDuration] = useState(0); // New state for total duration
 
   const getQueryParams = (query) => {
     return new URLSearchParams(query);
@@ -72,7 +73,7 @@ const AddVideoSeq = () => {
   const fetchTotalVideoLength = async () => {
     try {
       const waytrixToken = localStorage.getItem('waytrixToken');
-      
+
       // Send POST request with restoId in the request body
       const { data } = await axios.post(`${ipAddress}/api/Auth/videos-length`, {
         restoId: restoId // Send restoId in the request body
@@ -83,14 +84,14 @@ const AddVideoSeq = () => {
       });
   
       console.log('API response:', data); // Debugging line
-      return data.totalDuration; // Adjust to match API response field
+      setTotalDuration(data.totalDuration || 0); // Set total duration from API response
     } catch (error) {
       console.error('Error fetching total video length:', error);
-      return 0; // Fallback value if the request fails
+      setTotalDuration(0); // Fallback value if the request fails
     }
   };
   
-  
+  fetchTotalVideoLength(); // Fetch total video length on mount
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -99,9 +100,9 @@ const AddVideoSeq = () => {
       console.log('Calculated video duration:', videoDuration); // Debugging line
   
       const totalLength = await fetchTotalVideoLength();
-      console.log('Total video length:', totalLength); // Debugging line
+      console.log('Total video length:', totalDuration); // Debugging line
   
-      if (totalLength + videoDuration > 3600) { // 3600 seconds = 1 hour
+      if (totalDuration + videoDuration > 3600) { // 3600 seconds = 1 hour
         setErrorMessage('Cannot add more videos. The total length exceeds one hour.');
         console.error('Error: Total video length exceeds one hour.'); // Debugging line
         return;
@@ -139,7 +140,9 @@ const AddVideoSeq = () => {
   return (
     <div className="form-container">
       <Multer />
-      <h1 className="title">Upload Advertisement</h1>
+      <h1 className="title">Upload Advertisement <br />
+      (Total Videos Time: {Math.floor(totalDuration / 60)}m:{Math.round(totalDuration % 60)}s)
+      </h1>
       <form className="luxurious-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="label" htmlFor="videoURL">
@@ -173,9 +176,9 @@ const AddVideoSeq = () => {
             />
           </center>
         </div>
-        <div className="form-group">
+        <div className="form-group" style={{ border: '1px solid white', padding: '15px' }}>
           <label className="label" htmlFor="rushHour">
-            Tick if Rush Hour (1PM-3PM):
+            Tick if Rush Hour <br /> (1PM-3PM & 9PM-11PM):
           </label>
           <center>
             <input

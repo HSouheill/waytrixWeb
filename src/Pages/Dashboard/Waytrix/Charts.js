@@ -129,9 +129,26 @@ const Charts = () => {
             scales: {
               y: {
                 beginAtZero: true,
+                ticks: {
+                  color: 'white', // Y-axis label color
+                },
+              },
+              x: {
+                ticks: {
+                  color: 'white', // X-axis label color
+                },
               },
             },
+            plugins: {
+              legend: {
+                labels: {
+                  color: 'white', // Legend text color
+                },
+              },
+              
+            },
           },
+          
         });
       }
     }
@@ -167,9 +184,25 @@ const Charts = () => {
             scales: {
               y: {
                 beginAtZero: true,
+                ticks: {
+                  color: 'white', // Y-axis label color
+                },
+              },
+              x: {
+                ticks: {
+                  color: 'white', // X-axis label color
+                },
               },
             },
-          },
+            plugins: {
+              legend: {
+                labels: {
+                  color: 'white', // Legend text color
+                },
+              },
+              
+            },
+          },          
         });
       }
     }
@@ -205,9 +238,26 @@ const Charts = () => {
             scales: {
               y: {
                 beginAtZero: true,
+                ticks: {
+                  color: 'white', // Y-axis label color
+                },
+              },
+              x: {
+                ticks: {
+                  color: 'white', // X-axis label color
+                },
               },
             },
+            plugins: {
+              legend: {
+                labels: {
+                  color: 'white', // Legend text color
+                },
+              },
+             
+            },
           },
+          
         });
       }
     }
@@ -254,9 +304,26 @@ const Charts = () => {
             scales: {
               y: {
                 beginAtZero: true,
+                ticks: {
+                  color: 'white', // Y-axis label color
+                },
+              },
+              x: {
+                ticks: {
+                  color: 'white', // X-axis label color
+                },
               },
             },
+            plugins: {
+              legend: {
+                labels: {
+                  color: 'white', // Legend text color
+                },
+              },
+              
+            },
           },
+          
         });
       }
     }
@@ -306,6 +373,21 @@ const Charts = () => {
               },
             ],
           },
+          options: {
+            plugins: {
+              legend: {
+                labels: {
+                  color: 'white', // Legend text color
+                },
+              },
+              // title: {
+              //   display: true,
+              //   text: 'Pie Chart Title',
+              //   color: 'white', // Title text color
+              // },
+            },
+          },
+          
         });
       }
     }
