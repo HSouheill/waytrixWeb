@@ -7,10 +7,8 @@ const AddWaiter = () => {
   const [restoToken, setRestoToken] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('waiter'); // Default role set to waiter
-  const [tableId, setTableId] = useState(''); // Add tableId state
   const [showModal, setShowModal] = useState(false);
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
@@ -25,32 +23,29 @@ const AddWaiter = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (password.length < 8) {
       setPasswordError('Password must be at least 8 characters long.');
       return;
     }
-  
+
     const data = {
       name,
       email,
-      phone,
+      phone: '1234567', // Automatically set phone number
       password,
       role,
-      tableId,
       restoId
     };
-  
-    // console.log('Form data:', data); // Log form data
-  
+
     try {
       const waytrixToken = localStorage.getItem('waytrixToken');
       console.log('Waytrix Token:', waytrixToken); // Log token
-  
+
       if (!waytrixToken) {
         throw new Error('Waytrix token is missing.');
       }
-  
+
       const response = await axios.post(
         `${ipAddress}/api/Auth/signupWaiter`,
         data,
@@ -71,8 +66,6 @@ const AddWaiter = () => {
       setPasswordError('An error occurred. Please try again.');
     }
   };
-  
-  
 
   return (
     <div className="form-container">
@@ -83,10 +76,6 @@ const AddWaiter = () => {
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
         </label>
         <label>
-          Phone:
-          <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
-        </label>
-        <label>
           Email:
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </label>
@@ -95,10 +84,6 @@ const AddWaiter = () => {
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
         {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
-        <label>
-          Table ID:
-          <input type="text" value={tableId} onChange={(e) => setTableId(e.target.value)} />
-        </label>
         <button type="submit">Submit</button>
       </form>
       {showModal && (

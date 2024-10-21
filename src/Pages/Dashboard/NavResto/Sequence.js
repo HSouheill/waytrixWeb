@@ -10,10 +10,12 @@ const Sequence = () => {
   const restoId = queryParams.get('id');
 
   const [videos, setVideos] = useState([]);
+  const [filteredVideos, setFilteredVideos] = useState([]);
   const [tableNames, setTableNames] = useState({});
   const [partnerNames, setPartnerNames] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filterOption, setFilterOption] = useState('all'); // State for filtering options
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -30,6 +32,7 @@ const Sequence = () => {
         if (response.data) {
           const sortedVideos = response.data.sort((a, b) => a.order - b.order);
           setVideos(sortedVideos);
+          setFilteredVideos(sortedVideos); // Initially, show all videos
 
           const tableIds = sortedVideos.map(video => video.tableId);
           fetchTableNames(tableIds);
@@ -38,6 +41,7 @@ const Sequence = () => {
           fetchPartnerNames(uniquePartnerIds);
         } else {
           setVideos([]);
+          setFilteredVideos([]);
         }
       } catch (error) {
         setError('Error fetching videos.');
@@ -93,12 +97,29 @@ const Sequence = () => {
     fetchVideos();
   }, [restoId]);
 
+  const handleFilterChange = (e) => {
+    const filterValue = e.target.value;
+    setFilterOption(filterValue);
+
+    let filtered;
+    if (filterValue === 'rush') {
+      filtered = videos.filter(video => video.rushHour);
+    } else if (filterValue === 'non-rush') {
+      filtered = videos.filter(video => !video.rushHour);
+    } else {
+      filtered = videos;
+    }
+
+    setFilteredVideos(filtered);
+  };
+
   const handleDelete = async (videoId) => {
     try {
       await axios.delete(`${ipAddress}/api/Auth/deleteVideoByTableId`, {
         data: { videoId },
       });
       setVideos(videos.filter(video => video._id !== videoId));
+      setFilteredVideos(filteredVideos.filter(video => video._id !== videoId));
     } catch (error) {
       setError('Error deleting video.');
     }
@@ -117,6 +138,7 @@ const Sequence = () => {
 
       const sortedVideos = updatedVideos.sort((a, b) => a.order - b.order);
       setVideos(sortedVideos);
+      setFilteredVideos(sortedVideos); // Apply sorting to filtered videos as well
     } catch (error) {
       setError('Error updating video order.');
     }
@@ -127,6 +149,16 @@ const Sequence = () => {
       <h1>Video Table</h1>
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
+
+      {/* Dropdown for filtering */}
+      <div>
+        <label htmlFor="filter" style={{ fontSize: 16, marginBottom: 5 }}>Filter Videos:</label>
+        <select id="filter" value={filterOption} onChange={handleFilterChange}>
+          <option value="all">Show All</option>
+          <option value="rush">Filter Rush Hour</option>
+          <option value="non-rush">Filter Non-Rush Hour</option>
+        </select>
+      </div>
 
       <table className={styles.excelTable}>
         <thead>
@@ -141,8 +173,8 @@ const Sequence = () => {
           </tr>
         </thead>
         <tbody>
-          {videos.length > 0 ? (
-            videos.map((video) => (
+          {filteredVideos.length > 0 ? (
+            filteredVideos.map((video) => (
               <tr key={video._id}>
                 <td>
                   <video
@@ -150,8 +182,8 @@ const Sequence = () => {
                     controls
                     loop
                     muted
-                    width="200" // Adjust the width as needed
-                    height="150" // Adjust the height as needed
+                    width="200"
+                    height="150"
                   >
                     Your browser does not support the video tag.
                   </video>
