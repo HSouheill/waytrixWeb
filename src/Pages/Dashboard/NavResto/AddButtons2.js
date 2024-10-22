@@ -54,6 +54,11 @@ const AddButtons2 = () => {
       .catch(console.error);
   };
 
+
+  const handleRedirect = () => {
+    window.location.href = `/AddCustomButtonsScreen/${id}`;
+  };
+
   return (
     <div className="luxurious-dark-theme">
       <div className="button-container">
@@ -101,6 +106,9 @@ const AddButtons2 = () => {
           <p style={{ color: 'white' }}>Buttons have been updated successfully!</p>
         </div>
       )}
+      <button style={{ width: 200, marginTop: 10 }} onClick={handleRedirect}>
+          Go to Custom Buttons
+        </button>
     </div>
   );
 };
