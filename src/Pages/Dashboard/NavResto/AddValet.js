@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ipAddress } from '../../../config';
 
 const AddValet = () => {
@@ -11,6 +11,7 @@ const AddValet = () => {
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [passwordError, setPasswordError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const navigate = useNavigate();
   const location = useLocation(); // Use useLocation to access the query params
 
@@ -36,7 +37,6 @@ const AddValet = () => {
     const queryParams = getQueryParams(location.search);
     const restoId = queryParams.get('restoId'); // Get the 'id' param as restoId
 
-    
     const data = {
       name,
       email,
@@ -69,6 +69,10 @@ const AddValet = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev); // Toggle password visibility
+  };
+
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="luxurious-dark-form">
@@ -87,7 +91,24 @@ const AddValet = () => {
         </label>
         <label>
           Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <div style={{ position: 'relative' }}>
+            <input
+              type={showPassword ? 'text' : 'password'} // Toggle between text and password
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span 
+              onClick={togglePasswordVisibility} 
+              style={{ 
+                position: 'absolute', 
+                right: '10px', 
+                top: '44%', 
+                transform: 'translateY(-50%)', 
+                cursor: 'pointer' 
+              }}>
+              {showPassword ? '👁️' : '👁️‍🗨️'} {/* Eye icon to toggle visibility */}
+            </span>
+          </div>
         </label>
         {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
         <button type="submit">Submit</button>

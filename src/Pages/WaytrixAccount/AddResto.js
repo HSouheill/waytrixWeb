@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './AddResto.css';
@@ -11,6 +11,7 @@ const AddResto = () => {
   const [password, setPassword] = useState('');
   const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [restoToken, setRestoToken] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -45,12 +46,16 @@ const AddResto = () => {
   
       setTimeout(() => {
         setSuccessModalVisible(false);
-        navigate('/');
+        navigate('/'); // navigate to '/' after 5 seconds
       }, 5000); // navigate to '/' after 5 seconds
   
     } catch (error) {
       console.error(error); // log any errors
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev); // Toggle password visibility
   };
 
   return (
@@ -79,7 +84,28 @@ const AddResto = () => {
         />
 
         <label htmlFor="password" style={{ color: 'white' }}>Password:</label>
-        <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ backgroundColor: 'black', color: 'white', padding: '5px', marginBottom: '10px' }} />
+        <div style={{ position: 'relative', marginBottom: '10px' }}>
+          <input 
+            type={showPassword ? 'text' : 'password'} 
+            id="password" 
+            name="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+            style={{ backgroundColor: 'black', color: 'white', padding: '5px', width: '100%' }} 
+          />
+          <span 
+            onClick={togglePasswordVisibility} 
+            style={{ 
+              position: 'absolute', 
+              right: '1px', 
+              top: '43%', 
+              transform: 'translateY(-50%)', 
+              cursor: 'pointer' 
+            }}>
+            {showPassword ? '👁️' : '👁️‍🗨️'} {/* Eye icon to toggle visibility */}
+          </span>
+        </div>
 
         <button type="submit" style={{ backgroundColor: 'white', color: 'black', padding: '8px 15px', marginTop: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Submit</button>
         {/* Your existing form inputs */}

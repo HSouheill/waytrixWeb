@@ -106,9 +106,11 @@ const AddButtons2 = () => {
           <p style={{ color: 'white' }}>Buttons have been updated successfully!</p>
         </div>
       )}
+      <center>
       <button style={{ width: 200, marginTop: 10 }} onClick={handleRedirect}>
           Go to Custom Buttons
         </button>
+        </center>
     </div>
   );
 };

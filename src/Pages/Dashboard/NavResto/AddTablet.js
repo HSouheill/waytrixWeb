@@ -12,6 +12,7 @@ const AddTablet = () => {
   const [role, setRole] = useState('table');
   const [showModal, setShowModal] = useState(false);
   const [passwordError, setPasswordError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -62,6 +63,10 @@ const AddTablet = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev); // Toggle password visibility
+  };
+
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="luxurious-dark-form">
@@ -79,8 +84,8 @@ const AddTablet = () => {
           </>
         )}
         <label>
-              Num: {/* Name input */}
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        Num: {/* Num input */}
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
         </label>
         <label>
           Email: {/* Email input */}
@@ -88,7 +93,24 @@ const AddTablet = () => {
         </label>
         <label>
           Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <div style={{ position: 'relative' }}>
+            <input
+              type={showPassword ? 'text' : 'password'} // Toggle between text and password
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span 
+              onClick={togglePasswordVisibility} 
+              style={{ 
+                position: 'absolute', 
+                right: '10px', 
+                top: '44%', 
+                transform: 'translateY(-50%)', 
+                cursor: 'pointer' 
+              }}>
+              {showPassword ? '👁️' : '👁️‍🗨️'} {/* Eye icon to toggle visibility */}
+            </span>
+          </div>
         </label>
         {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
         <label>

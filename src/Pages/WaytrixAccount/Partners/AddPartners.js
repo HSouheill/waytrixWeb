@@ -12,6 +12,7 @@ const AddPartners = () => {
   const [password, setPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [partnerRestoAccounts, setPartnerRestoAccounts] = useState([]);
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
   useEffect(() => {
     fetchPartnerRestoAccounts();
@@ -98,6 +99,10 @@ const AddPartners = () => {
     setPartnerRestoAccounts(updatedAccounts);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev); // Toggle password visibility
+  };
+
   return (
     <div className="containerPARTNERS">
       <Multer />
@@ -148,31 +153,42 @@ const AddPartners = () => {
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
+          <div style={{ position: 'relative' }}>
+            <input
+              type={showPassword ? 'text' : 'password'} // Toggle between text and password
+              id="password"
+              name="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            <span 
+              onClick={togglePasswordVisibility} 
+              style={{ 
+                position: 'absolute', 
+                right: '0px', 
+                top: '44%', 
+                transform: 'translateY(-50%)', 
+                cursor: 'pointer' 
+              }}>
+              {showPassword ? '👁️' : '👁️‍🗨️'} {/* Eye icon to toggle visibility */}
+            </span>
+          </div>
         </div>
         <div className="grid-container-checkt">
-      {partnerRestoAccounts.map(account => (
-        <div key={account._id} className="card-checkt">
-          <label className="checkbox-container-checkt">
-            <span style={{marginTop:45}}>
-            {account.name}</span>
-            <input
-            
-              type="checkbox"
-              checked={account.selected || false}
-              onChange={() => handleCheckboxChange(account._id)}
-            />
-            <span className="checkmark"></span>
-          </label>
+          {partnerRestoAccounts.map(account => (
+            <div key={account._id} className="card-checkt">
+              <label className="checkbox-container-checkt">
+                <span style={{marginTop:45}}>{account.name}</span>
+                <input
+                  type="checkbox"
+                  checked={account.selected || false}
+                  onChange={() => handleCheckboxChange(account._id)}
+                />
+                <span className="checkmark"></span>
+              </label>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
         <center className='center'>
           <button type="submit" className="submit-button">Submit</button>
         </center>
