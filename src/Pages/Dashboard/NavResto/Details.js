@@ -13,7 +13,7 @@ const Details = () => {
   return (
     <div>
       <div className="container">
-        <div className="buttons-container" style={{ marginTop: '30px' }}>
+        <div className="buttons-container" style={{ marginTop: '30px', width: '400px' }}>
           <button
             className="button"
             style={{ fontStyle: 'normal' }}
@@ -41,6 +41,13 @@ const Details = () => {
             onClick={() => handleButtonClick('/Sequence')}
           >
             Sequences
+          </button>
+          <button
+            className="button"
+            style={{ fontStyle: 'normal' }}
+            onClick={() => handleButtonClick('/AddButtons2')}
+          >
+            Add Buttons
           </button>
         </div>
       </div>

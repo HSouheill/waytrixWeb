@@ -3,6 +3,10 @@ import axios from 'axios';
 import { Bar, Pie, Line, Doughnut } from 'react-chartjs-2';
 import { ipAddress } from '../../../config';
 import './Cards.css'; // Import CSS for styling
+import 'chartjs-plugin-datalabels';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 export const Cards = () => {
   const [surveyData, setSurveyData] = useState(null);
@@ -104,7 +108,7 @@ export const Cards = () => {
       'Table Count',
       'Valet Count',
       'Spin Counts',
-      'Most Frequently Requested Order'
+      // 'Most Frequently Requested Order'
     ],
     datasets: [
       {
@@ -116,7 +120,7 @@ export const Cards = () => {
           surveyData?.tableCount || 0,
           surveyData?.valetCount || 0,
           surveyData?.spinCounts || 0,
-          surveyData?.mostFrequentlyRequestedOrder || 0
+          // surveyData?.mostFrequentlyRequestedOrder || 0
         ],
         backgroundColor: [
           'rgba(54, 162, 235, 0.6)',
@@ -179,6 +183,7 @@ export const Cards = () => {
       bodyColor: 'white', // Set tooltip text to white
       titleColor: 'white',
     },
+    datalabels: false, // Disable datalabels for non-Pie charts
   },
 };
 
@@ -220,6 +225,7 @@ export const Cards = () => {
         bodyColor: 'white', // Set tooltip text to white
         titleColor: 'white',
       },
+      datalabels: false, // Disable datalabels for non-Pie charts
     },
   };
   
@@ -249,8 +255,35 @@ export const Cards = () => {
           bodyColor: 'white', // Set tooltip text to white
           titleColor: 'white',
         },
+        datalabels: false, // Disable datalabels for non-Pie charts
       },
     };
+
+
+    // Pie chart specific options with datalabels enabled
+const pieChartOptions = {
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      labels: {
+        color: 'white', // Set legend text to white
+      },
+    },
+    tooltip: {
+      bodyColor: 'white', // Set tooltip text to white
+      titleColor: 'white',
+    },
+    datalabels: {
+      color: 'white', // Set the data label color to white
+      formatter: (value, ctx) => {
+        return `${value}`; // Show the value only
+      },
+      font: {
+        size: 16,
+      },
+    },
+  },
+};
 
   return (
     <div className="cards-container">
@@ -260,7 +293,7 @@ export const Cards = () => {
             <Bar data={chartData} options={commonChartOptions}/>
           </div> */}
           <div className="chart-item">
-            <Pie data={chartData} options={commonChartOptions}/>
+            <Pie data={chartData} options={pieChartOptions}/>
           </div>
           {/* <div className="chart-item">
             <Line data={chartData} options={commonChartOptions}/>

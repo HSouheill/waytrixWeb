@@ -44,6 +44,7 @@ import Watches from './Pages/Dashboard/NavResto/Watches';
 import AddWatch from './Pages/Dashboard/NavResto/AddWatch';
 import ViewTables from './Pages/RestoAccount/ViewTables/ViewTables';
 import AddTablet2 from './Pages/RestoAccount/ViewTables/AddTablet2';
+import AddButtons2 from './Pages/Dashboard/NavResto/AddButtons2';
 function App() {
   const [waytrixToken, setWaytrixToken] = useState(localStorage.getItem('waytrixToken') || '');
   const [restoToken, setRestoToken] = useState(localStorage.getItem('restoToken') || '');
@@ -117,6 +118,7 @@ function App() {
               <Route path="/GetRestoAccountForVideoUpdate" element={<GetRestoAccountForVideoUpdate />} />
               <Route path="/GetForLoopId/:id" element={<GetForLoopId />} />
               <Route path="/GetRestoAccountForDelete" element={<GetRestoAccountForDelete />} />
+              <Route path="/AddButtons2" element={<AddButtons2 />} />
 
 
 
@@ -131,6 +133,7 @@ function App() {
               <Route path="/DeletePartners" element={<WaytrixLogin />} />
               <Route path="/AddVoucher" element={<WaytrixLogin />} />
               <Route path="/AddButtons/:id" element={<WaytrixLogin />} />
+              <Route path="/AddButtons2/:id" element={<WaytrixLogin />} />
               <Route path="/GetRestoAccountButtons" element={<WaytrixLogin />} />
               <Route path="/TableLocations" element={<WaytrixLogin />} />
               <Route path="/AddCustomButtons" element={<WaytrixLogin />} />

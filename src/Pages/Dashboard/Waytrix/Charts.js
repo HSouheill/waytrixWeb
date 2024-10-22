@@ -145,7 +145,7 @@ const Charts = () => {
                   color: 'white', // Legend text color
                 },
               },
-              
+              datalabels: false, // Disable datalabels for non-Pie charts
             },
           },
           
@@ -200,7 +200,7 @@ const Charts = () => {
                   color: 'white', // Legend text color
                 },
               },
-              
+              datalabels: false, // Disable datalabels for non-Pie charts
             },
           },          
         });
@@ -254,7 +254,7 @@ const Charts = () => {
                   color: 'white', // Legend text color
                 },
               },
-             
+              datalabels: false, // Disable datalabels for non-Pie charts
             },
           },
           
@@ -320,7 +320,7 @@ const Charts = () => {
                   color: 'white', // Legend text color
                 },
               },
-              
+              datalabels: false, // Disable datalabels for non-Pie charts
             },
           },
           
@@ -385,6 +385,15 @@ const Charts = () => {
               //   text: 'Pie Chart Title',
               //   color: 'white', // Title text color
               // },
+              datalabels: {
+                color: 'white', // Set datalabel text color to white
+                formatter: (value, context) => {
+                  return value; // Show the value
+                },
+                font: {
+                  size: 14, // Adjust font size if needed
+                },
+              },
             },
           },
           

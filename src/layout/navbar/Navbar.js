@@ -184,7 +184,7 @@ const Navbar = () => {
               <li className="drawer-menu-item" onClick={handleMenuItemClick}>
                 <span className="dropdown-toggle aTitle">Resto Account</span>
                 <ul className="sub-menu">
-                  <li className='aSubTitle'>    <Link className='Link' to="/ContactUs">Contact Us</Link></li>
+                  {/* <li className='aSubTitle'>    <Link className='Link' to="/ContactUs">Contact Us</Link></li> */}
                   <li className='aSubTitle'>    <Link className='Link' to="/AddMenu">Add Menu</Link></li>
                   <li className='aSubTitle'>    <Link className='Link' to="/ViewTables">View Tables</Link></li>
                   <li className='aSubTitle'>    <Link className='Link' to="/GetWaiters">Assign Tables To Waiters</Link></li>

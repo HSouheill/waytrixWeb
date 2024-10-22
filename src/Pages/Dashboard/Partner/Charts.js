@@ -116,6 +116,7 @@ const PartnerDashboard = () => {
                 color: 'white', // Legend text color
               },
             },
+            datalabels: false, // Disable datalabels for non-Pie charts
           },
         }
         
@@ -143,6 +144,15 @@ const PartnerDashboard = () => {
             legend: {
               labels: {
                 color: 'white', // Legend text color
+              },
+            },
+            datalabels: {
+              color: 'white', // Set datalabel text color to white
+              formatter: (value, context) => {
+                return value; // Show the value
+              },
+              font: {
+                size: 14, // Adjust font size if needed
               },
             },
           },
@@ -191,6 +201,7 @@ const PartnerDashboard = () => {
                 color: 'white', // Legend text color
               },
             },
+            datalabels: false, // Disable datalabels for non-Pie charts
           },
         }        
       });
@@ -227,6 +238,7 @@ const PartnerDashboard = () => {
                 color: 'white', // Legend text color
               },
             },
+            datalabels: false, // Disable datalabels for non-Pie charts
           },
         }        
       });
@@ -264,6 +276,7 @@ const PartnerDashboard = () => {
                 color: 'white', // Legend text color
               },
             },
+            datalabels: false, // Disable datalabels for non-Pie charts
           },
         }   
       });

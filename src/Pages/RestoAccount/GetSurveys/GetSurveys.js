@@ -7,12 +7,13 @@ import { ipAddress } from '../../../config';
 
 const GetSurveys = () => {
   const [surveys, setSurveys] = useState([]);
+  const [monthFilter, setMonthFilter] = useState('All');
 
   useEffect(() => {
     const fetchSurveys = async () => {
       try {
         const restoId = localStorage.getItem('restoId');
-        const restoToken = localStorage.getItem('restoToken'); 
+        const restoToken = localStorage.getItem('restoToken');
         const response = await axios.post(
           `${ipAddress}/api/ContactUsRoutes/GetAllSurveys`,
           { restoId },
@@ -22,14 +23,21 @@ const GetSurveys = () => {
             }
           }
         );
-        setSurveys(response.data);
+  
+        const filteredSurveys = response.data.filter(survey => {
+          if (monthFilter === 'All') return true;
+          const surveyDate = new Date(survey.date); // Assuming survey has a 'date' field
+          return surveyDate.getMonth() === parseInt(monthFilter);
+        });
+  
+        setSurveys(filteredSurveys);
       } catch (error) {
         console.error('Error fetching surveys:', error);
       }
     };
   
     fetchSurveys();
-  }, []);
+  }, [monthFilter]); // Re-run effect when monthFilter changes
 
   // Function to export surveys as a PDF
   const exportSurveysToPDF = () => {
@@ -80,6 +88,23 @@ const GetSurveys = () => {
   return (
     <div className="dark-theme">
       <h1 className="title">Survey Results</h1>
+      <select value={monthFilter} onChange={(e) => setMonthFilter(e.target.value)}
+        style={{ marginRight: '6px', marginBottom: '20px', padding: '8px' }} >
+        <option value="All">All Months</option>
+        <option value="0">January</option>
+        <option value="1">February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
+      </select>
+
       <button onClick={exportSurveysToPDF}>Export Surveys as PDF</button> {/* Export PDF button */}
       <button onClick={exportSurveysToExcel}>Export Surveys as Excel</button> {/* Export Excel button */}
       <div className="survey-list">
