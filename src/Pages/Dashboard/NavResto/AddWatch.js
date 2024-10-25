@@ -60,7 +60,8 @@ const AddWaiter = () => {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        navigate('/');
+        window.location.reload(); // Force refresh the page
+        //navigate('/');
       }, 5000);
     } catch (error) {
       console.error('Error occurred:', error.response ? error.response.data : error.message);

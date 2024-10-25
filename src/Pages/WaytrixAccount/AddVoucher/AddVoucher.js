@@ -81,7 +81,8 @@ const AddVoucher = () => {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        window.location.href = '/';
+        //window.location.href = '/';
+        window.location.reload(); // Force refresh the page
       }, 5000);
 
       setFormData({

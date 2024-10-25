@@ -48,7 +48,8 @@ const AddButtons2 = () => {
       .then(() => {
         setShowModal(true);
         setTimeout(() => {
-          window.location.href = '/';
+          //window.location.href = '/';
+          window.location.reload(); // Force refresh the page
         }, 5000); // Redirect after 5 seconds
       })
       .catch(console.error);

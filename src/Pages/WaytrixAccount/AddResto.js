@@ -46,7 +46,8 @@ const AddResto = () => {
   
       setTimeout(() => {
         setSuccessModalVisible(false);
-        navigate('/'); // navigate to '/' after 5 seconds
+        //navigate('/'); // navigate to '/' after 5 seconds
+        window.location.reload(); // Force refresh the page
       }, 5000); // navigate to '/' after 5 seconds
   
     } catch (error) {
@@ -63,10 +64,10 @@ const AddResto = () => {
       <h1 style={{ color: 'white', textAlign: 'center', marginBottom: '20px' }}>Add Resto</h1>
       <form className="form" onSubmit={handleSubmit}>
         <label htmlFor="name" style={{ color: 'white' }}>Name:</label>
-        <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} required style={{ backgroundColor: 'black', color: 'white', padding: '5px', marginBottom: '10px' }} />
+        <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} required style={{ backgroundColor: 'black', color: 'white', padding: '5px', marginBottom: '10px', height: '25px' }} />
 
         <label htmlFor="email" style={{ color: 'white' }}>Email:</label>
-        <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ backgroundColor: 'black', color: 'white', padding: '5px', marginBottom: '10px' }} />
+        <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ backgroundColor: 'black', color: 'white', padding: '5px', marginBottom: '10px', height: '25px' }} />
 
         <label htmlFor="phone" style={{ color: 'white' }}>Phone:</label>
         <input
@@ -80,7 +81,7 @@ const AddResto = () => {
             }
           }}
           required
-          style={{ backgroundColor: 'black', color: 'white', padding: '5px', marginBottom: '10px' }}
+          style={{ backgroundColor: 'black', color: 'white', padding: '5px', marginBottom: '10px', height: '25px' }}
         />
 
         <label htmlFor="password" style={{ color: 'white' }}>Password:</label>
@@ -92,7 +93,7 @@ const AddResto = () => {
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
             required 
-            style={{ backgroundColor: 'black', color: 'white', padding: '5px', width: '100%' }} 
+            style={{ backgroundColor: 'black', color: 'white', padding: '5px', width: '100%', height: '25px' }} 
           />
           <span 
             onClick={togglePasswordVisibility} 

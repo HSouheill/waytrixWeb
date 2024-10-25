@@ -21,7 +21,8 @@ const AddMenu = () => {
       });
       setModalVisible(true);
       setTimeout(() => {
-        window.location.href = '/';
+        //window.location.href = '/';
+        window.location.reload(); // Force refresh the page
       }, 5000);
     } catch (error) {
       console.error('Error:', error);

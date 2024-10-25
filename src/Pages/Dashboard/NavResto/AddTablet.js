@@ -56,7 +56,8 @@ const AddTablet = () => {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        navigate('/');
+        window.location.reload(); // Force refresh the page
+        //navigate('/AddTablet');
       }, 5000);
     } catch (error) {
       console.error('There was an error!', error);

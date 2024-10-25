@@ -127,7 +127,8 @@ const AddVideoSeq = () => {
       console.log('Response:', data);
       setShowModal(true);
       setTimeout(() => {
-        window.location.href = '/';
+        window.location.reload(); // Force refresh the page
+        //window.location.href = '/';
       }, 3000); // Redirect after 3 seconds
     } catch (error) {
       console.error('Error:', error);

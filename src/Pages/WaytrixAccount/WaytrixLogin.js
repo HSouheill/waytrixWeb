@@ -35,6 +35,9 @@ const SignIn = () => {
       console.log('Token stored successfully:', token);
     } catch (error) {
       console.error('Error signing in:', error);
+      
+      // Show an alert if the login fails for any other reason
+      alert('Please check your email and password');
     }
   };
 

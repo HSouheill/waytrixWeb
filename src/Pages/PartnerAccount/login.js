@@ -10,8 +10,14 @@ const SignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false); // New state for toggling password visibility
 
   const handleSignIn = async () => {
+    // Check if the phone input contains only numbers
+    if (isNaN(email.trim())) {
+      alert('Phone number cannot contain text or symbols');
+      return;
+    }
+
     const userData = {
-      phone: parseInt(email), // Sending email as an integer
+      phone: email.trim(), // Send the phone as a string
       password
     };
 
@@ -25,6 +31,8 @@ const SignIn = () => {
       console.log('Token stored successfully:', token);
     } catch (error) {
       console.error('Error signing in:', error);
+      // Show an alert if the login fails for any other reason
+      alert('Please check your phone number and password');
     }
   };
 
@@ -58,9 +66,8 @@ const SignIn = () => {
         Sign In
       </button>
 
-
-         {/* Add CSS at the bottom of the page */}
-         <style>
+      {/* Add CSS at the bottom of the page */}
+      <style>
         {`
           .password-input-container {
             position: relative;

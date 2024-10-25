@@ -45,6 +45,8 @@ import AddWatch from './Pages/Dashboard/NavResto/AddWatch';
 import ViewTables from './Pages/RestoAccount/ViewTables/ViewTables';
 import AddTablet2 from './Pages/RestoAccount/ViewTables/AddTablet2';
 import AddButtons2 from './Pages/Dashboard/NavResto/AddButtons2';
+import RestoForgotPassword from './Pages/RestoAccount/RestoForgotPassword';
+import RestoForgotPassword2 from './Pages/RestoAccount/RestoForgotPassword2';
 function App() {
   const [waytrixToken, setWaytrixToken] = useState(localStorage.getItem('waytrixToken') || '');
   const [restoToken, setRestoToken] = useState(localStorage.getItem('restoToken') || '');
@@ -169,6 +171,8 @@ function App() {
             </>
             :
             <>
+            <Route path="/RestoForgotPassword" element={<RestoForgotPassword />} />
+            <Route path="/RestoForgotPassword2" element={<RestoForgotPassword2 />} />
             <Route path="/RestoLogin" element={<RestoLogin />} />
            
             <Route path="/ContactUs" element={<RestoLogin />} />
@@ -176,6 +180,8 @@ function App() {
             <Route path="/GetWaiters" element={<RestoLogin />} />
             <Route path="/AssignTablesToWaiter/:id" element={<RestoLogin />} />
             <Route path="/GetSurveys" element={<RestoLogin />} />
+            <Route path="/ViewTables" element={<RestoLogin />} />
+            <Route path="/AddTablet2" element={<RestoLogin />} />
 
             </>
           }

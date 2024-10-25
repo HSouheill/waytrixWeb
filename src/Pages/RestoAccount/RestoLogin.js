@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ipAddress } from '../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -30,6 +31,8 @@ const SignIn = () => {
       console.log('Token stored successfully:', token);
     } catch (error) {
       console.error('Error signing in:', error);
+      // Show an alert if the login fails for any other reason
+      alert('Please check your email and password');
     }
   };
 
@@ -62,6 +65,21 @@ const SignIn = () => {
       <button onClick={handleSignIn} className='button'>
         Sign In
       </button>
+
+
+      {/* Forgot password link */}
+      <Link 
+          to="/RestoForgotPassword" 
+          style={{ 
+            textDecoration: 'underline',  // Underline the text
+            color: '#fff', 
+            fontSize: '15px', 
+            display: 'inline-block', 
+            padding: '10px 0' // 5px padding top and bottom
+          }}
+        >
+        Forgot password?
+      </Link>
 
       {/* Add CSS at the bottom of the page */}
       <style>

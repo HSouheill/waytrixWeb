@@ -85,7 +85,8 @@ const AddPartners = () => {
         setPhone('');
         setDescription('');
         setPassword('');
-        window.location.href = '/';
+        //window.location.href = '/';
+        window.location.reload(); // Force refresh the page
       }, 5000);
     } catch (error) {
       console.error('Error adding partner:', error);
