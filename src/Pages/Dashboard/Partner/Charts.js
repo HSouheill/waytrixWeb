@@ -221,42 +221,42 @@ const PartnerDashboard = () => {
         
       });
 
-      const pieChartCtx = pieChartRef.current.getContext('2d');
-      new Chart(pieChartCtx, {
-        type: 'pie',
-        data: {
-          labels: ['Total Contact Us Clicks'],
-          datasets: [{
-            label: 'Total Contact Us Clicks',
-            data: [videoData.totalContactUsClicks],
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.2)'
-            ],
-            borderColor: [
-              'rgba(54, 162, 235, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          plugins: {
-            legend: {
-              labels: {
-                color: 'white', // Legend text color
-              },
-            },
-            datalabels: {
-              color: 'white', // Set datalabel text color to white
-              formatter: (value, context) => {
-                return value; // Show the value
-              },
-              font: {
-                size: 14, // Adjust font size if needed
-              },
-            },
-          },
-        }        
-      });
+      // const pieChartCtx = pieChartRef.current.getContext('2d');
+      // new Chart(pieChartCtx, {
+      //   type: 'pie',
+      //   data: {
+      //     labels: ['Total Contact Us Clicks'],
+      //     datasets: [{
+      //       label: 'Total Contact Us Clicks',
+      //       data: [videoData.totalContactUsClicks],
+      //       backgroundColor: [
+      //         'rgba(54, 162, 235, 0.2)'
+      //       ],
+      //       borderColor: [
+      //         'rgba(54, 162, 235, 1)'
+      //       ],
+      //       borderWidth: 1
+      //     }]
+      //   },
+      //   options: {
+      //     plugins: {
+      //       legend: {
+      //         labels: {
+      //           color: 'white', // Legend text color
+      //         },
+      //       },
+      //       datalabels: {
+      //         color: 'white', // Set datalabel text color to white
+      //         formatter: (value, context) => {
+      //           return value; // Show the value
+      //         },
+      //         font: {
+      //           size: 14, // Adjust font size if needed
+      //         },
+      //       },
+      //     },
+      //   }        
+      // });
 
       const lineChartCtx = lineChartRef.current.getContext('2d');
       new Chart(lineChartCtx, {
@@ -433,275 +433,275 @@ if (monthlyCounts.length > 0) {
   });
 }
 
-  // Monthly Line Chart
-  if (monthlyCounts2.length > 0) {
-    const monthlyLineChartCtx2 = monthlyBarChartRef2.current.getContext('2d');
-    new Chart(monthlyLineChartCtx2, {
-      type: 'line', // Change to 'line'
-      data: {
-        labels: monthlyCounts2.map(item => item.month),
-        datasets: [{
-          label: 'Monthly Table Counts',
-          data: monthlyCounts2.map(item => item.count),
-          backgroundColor: 'rgba(255, 206, 86, 0.2)',
-          borderColor: 'rgba(255, 206, 86, 1)',
-          borderWidth: 2,
-          fill: false, // Set to false for line chart
-          tension: 0.1, // Smooth lines
-        }]
-      },
-      options: {
-        layout: {
-          padding: {
-            top: 20, // Adjust padding as necessary
-            right: 20,
-            bottom: 60,
-            left: 20,
-          }
-        },
-        responsive: true, // Make the chart responsive
-        maintainAspectRatio: false, // Allow the chart to fill the container
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: 'white', // Y-axis label color
-            },
-          },
-          x: {
-            ticks: {
-              color: 'white', // X-axis label color
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            labels: {
-              color: 'white', // Legend text color
-            },
-          },
-          datalabels: false, // Disable datalabels for non-Pie charts
-        },
-      }
-    });
-  }
+  // // Monthly Line Chart
+  // if (monthlyCounts2.length > 0) {
+  //   const monthlyLineChartCtx2 = monthlyBarChartRef2.current.getContext('2d');
+  //   new Chart(monthlyLineChartCtx2, {
+  //     type: 'line', // Change to 'line'
+  //     data: {
+  //       labels: monthlyCounts2.map(item => item.month),
+  //       datasets: [{
+  //         label: 'Monthly Table Counts',
+  //         data: monthlyCounts2.map(item => item.count),
+  //         backgroundColor: 'rgba(255, 206, 86, 0.2)',
+  //         borderColor: 'rgba(255, 206, 86, 1)',
+  //         borderWidth: 2,
+  //         fill: false, // Set to false for line chart
+  //         tension: 0.1, // Smooth lines
+  //       }]
+  //     },
+  //     options: {
+  //       layout: {
+  //         padding: {
+  //           top: 20, // Adjust padding as necessary
+  //           right: 20,
+  //           bottom: 60,
+  //           left: 20,
+  //         }
+  //       },
+  //       responsive: true, // Make the chart responsive
+  //       maintainAspectRatio: false, // Allow the chart to fill the container
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true,
+  //           ticks: {
+  //             color: 'white', // Y-axis label color
+  //           },
+  //         },
+  //         x: {
+  //           ticks: {
+  //             color: 'white', // X-axis label color
+  //           },
+  //         },
+  //       },
+  //       plugins: {
+  //         legend: {
+  //           labels: {
+  //             color: 'white', // Legend text color
+  //           },
+  //         },
+  //         datalabels: false, // Disable datalabels for non-Pie charts
+  //       },
+  //     }
+  //   });
+  // }
 
 
-   // Monthly Line Chart 3
-   if (monthlyCounts3.length > 0) {
-    const monthlyLineChartCtx3 = monthlyBarChartRef3.current.getContext('2d');
-    new Chart(monthlyLineChartCtx3, {
-      type: 'line', // Change to 'line'
-      data: {
-        labels: monthlyCounts3.map(item => item.month),
-        datasets: [{
-          label: 'Monthly Table Counts',
-          data: monthlyCounts3.map(item => item.count),
-          backgroundColor: 'rgba(255, 206, 86, 0.2)',
-          borderColor: 'rgba(255, 206, 86, 1)',
-          borderWidth: 2,
-          fill: false, // Set to false for line chart
-          tension: 0.1, // Smooth lines
-        }]
-      },
-      options: {
-        layout: {
-          padding: {
-            top: 20, // Adjust padding as necessary
-            right: 20,
-            bottom: 60,
-            left: 20,
-          }
-        },
-        responsive: true, // Make the chart responsive
-        maintainAspectRatio: false, // Allow the chart to fill the container
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: 'white', // Y-axis label color
-            },
-          },
-          x: {
-            ticks: {
-              color: 'white', // X-axis label color
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            labels: {
-              color: 'white', // Legend text color
-            },
-          },
-          datalabels: false, // Disable datalabels for non-Pie charts
-        },
-      }
-    });
-  }
+  //  // Monthly Line Chart 3
+  //  if (monthlyCounts3.length > 0) {
+  //   const monthlyLineChartCtx3 = monthlyBarChartRef3.current.getContext('2d');
+  //   new Chart(monthlyLineChartCtx3, {
+  //     type: 'line', // Change to 'line'
+  //     data: {
+  //       labels: monthlyCounts3.map(item => item.month),
+  //       datasets: [{
+  //         label: 'Monthly Waiter Counts',
+  //         data: monthlyCounts3.map(item => item.count),
+  //         backgroundColor: 'rgba(255, 206, 86, 0.2)',
+  //         borderColor: 'rgba(255, 206, 86, 1)',
+  //         borderWidth: 2,
+  //         fill: false, // Set to false for line chart
+  //         tension: 0.1, // Smooth lines
+  //       }]
+  //     },
+  //     options: {
+  //       layout: {
+  //         padding: {
+  //           top: 20, // Adjust padding as necessary
+  //           right: 20,
+  //           bottom: 60,
+  //           left: 20,
+  //         }
+  //       },
+  //       responsive: true, // Make the chart responsive
+  //       maintainAspectRatio: false, // Allow the chart to fill the container
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true,
+  //           ticks: {
+  //             color: 'white', // Y-axis label color
+  //           },
+  //         },
+  //         x: {
+  //           ticks: {
+  //             color: 'white', // X-axis label color
+  //           },
+  //         },
+  //       },
+  //       plugins: {
+  //         legend: {
+  //           labels: {
+  //             color: 'white', // Legend text color
+  //           },
+  //         },
+  //         datalabels: false, // Disable datalabels for non-Pie charts
+  //       },
+  //     }
+  //   });
+  // }
 
-    // Monthly Line Chart 4
-    if (monthlyCounts4.length > 0) {
-      const monthlyLineChartCtx4 = monthlyBarChartRef4.current.getContext('2d');
-      new Chart(monthlyLineChartCtx4, {
-        type: 'line', // Change to 'line'
-        data: {
-          labels: monthlyCounts4.map(item => item.month),
-          datasets: [{
-            label: 'Monthly Valet Counts',
-            data: monthlyCounts4.map(item => item.count),
-            backgroundColor: 'rgba(255, 206, 86, 0.2)',
-            borderColor: 'rgba(255, 206, 86, 1)',
-            borderWidth: 2,
-            fill: false, // Set to false for line chart
-            tension: 0.1, // Smooth lines
-          }]
-        },
-        options: {
-          layout: {
-            padding: {
-              top: 20, // Adjust padding as necessary
-              right: 20,
-              bottom: 60,
-              left: 20,
-            }
-          },
-          responsive: true, // Make the chart responsive
-          maintainAspectRatio: false, // Allow the chart to fill the container
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                color: 'white', // Y-axis label color
-              },
-            },
-            x: {
-              ticks: {
-                color: 'white', // X-axis label color
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              labels: {
-                color: 'white', // Legend text color
-              },
-            },
-            datalabels: false, // Disable datalabels for non-Pie charts
-          },
-        }
-      });
+    // // Monthly Line Chart 4
+    // if (monthlyCounts4.length > 0) {
+    //   const monthlyLineChartCtx4 = monthlyBarChartRef4.current.getContext('2d');
+    //   new Chart(monthlyLineChartCtx4, {
+    //     type: 'line', // Change to 'line'
+    //     data: {
+    //       labels: monthlyCounts4.map(item => item.month),
+    //       datasets: [{
+    //         label: 'Monthly Valet Counts',
+    //         data: monthlyCounts4.map(item => item.count),
+    //         backgroundColor: 'rgba(255, 206, 86, 0.2)',
+    //         borderColor: 'rgba(255, 206, 86, 1)',
+    //         borderWidth: 2,
+    //         fill: false, // Set to false for line chart
+    //         tension: 0.1, // Smooth lines
+    //       }]
+    //     },
+    //     options: {
+    //       layout: {
+    //         padding: {
+    //           top: 20, // Adjust padding as necessary
+    //           right: 20,
+    //           bottom: 60,
+    //           left: 20,
+    //         }
+    //       },
+    //       responsive: true, // Make the chart responsive
+    //       maintainAspectRatio: false, // Allow the chart to fill the container
+    //       scales: {
+    //         y: {
+    //           beginAtZero: true,
+    //           ticks: {
+    //             color: 'white', // Y-axis label color
+    //           },
+    //         },
+    //         x: {
+    //           ticks: {
+    //             color: 'white', // X-axis label color
+    //           },
+    //         },
+    //       },
+    //       plugins: {
+    //         legend: {
+    //           labels: {
+    //             color: 'white', // Legend text color
+    //           },
+    //         },
+    //         datalabels: false, // Disable datalabels for non-Pie charts
+    //       },
+    //     }
+    //   });
+    // }
+
+
+        // // Monthly Line Chart 5
+        // if (monthlyCounts5.length > 0) {
+        //   const monthlyLineChartCtx5 = monthlyBarChartRef5.current.getContext('2d');
+        //   new Chart(monthlyLineChartCtx5, {
+        //     type: 'line', // Change to 'line'
+        //     data: {
+        //       labels: monthlyCounts5.map(item => item.month),
+        //       datasets: [{
+        //         label: 'Monthly Car Counts',
+        //         data: monthlyCounts5.map(item => item.count),
+        //         backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        //         borderColor: 'rgba(255, 206, 86, 1)',
+        //         borderWidth: 2,
+        //         fill: false, // Set to false for line chart
+        //         tension: 0.1, // Smooth lines
+        //       }]
+        //     },
+        //     options: {
+        //       layout: {
+        //         padding: {
+        //           top: 20, // Adjust padding as necessary
+        //           right: 20,
+        //           bottom: 60,
+        //           left: 20,
+        //         }
+        //       },
+        //       responsive: true, // Make the chart responsive
+        //       maintainAspectRatio: false, // Allow the chart to fill the container
+        //       scales: {
+        //         y: {
+        //           beginAtZero: true,
+        //           ticks: {
+        //             color: 'white', // Y-axis label color
+        //           },
+        //         },
+        //         x: {
+        //           ticks: {
+        //             color: 'white', // X-axis label color
+        //           },
+        //         },
+        //       },
+        //       plugins: {
+        //         legend: {
+        //           labels: {
+        //             color: 'white', // Legend text color
+        //           },
+        //         },
+        //         datalabels: false, // Disable datalabels for non-Pie charts
+        //       },
+        //     }
+        //   });
+        // }
+
+
+                // // Monthly Line Chart 6
+                // if (monthlyCounts6.length > 0) {
+                //   const monthlyLineChartCtx6 = monthlyBarChartRef6.current.getContext('2d');
+                //   new Chart(monthlyLineChartCtx6, {
+                //     type: 'line', // Change to 'line'
+                //     data: {
+                //       labels: monthlyCounts6.map(item => item.month),
+                //       datasets: [{
+                //         label: 'Monthly Contact Us Counts',
+                //         data: monthlyCounts6.map(item => item.count),
+                //         backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                //         borderColor: 'rgba(255, 206, 86, 1)',
+                //         borderWidth: 2,
+                //         fill: false, // Set to false for line chart
+                //         tension: 0.1, // Smooth lines
+                //       }]
+                //     },
+                //     options: {
+                //       layout: {
+                //         padding: {
+                //           top: 20, // Adjust padding as necessary
+                //           right: 20,
+                //           bottom: 60,
+                //           left: 20,
+                //         }
+                //       },
+                //       responsive: true, // Make the chart responsive
+                //       maintainAspectRatio: false, // Allow the chart to fill the container
+                //       scales: {
+                //         y: {
+                //           beginAtZero: true,
+                //           ticks: {
+                //             color: 'white', // Y-axis label color
+                //           },
+                //         },
+                //         x: {
+                //           ticks: {
+                //             color: 'white', // X-axis label color
+                //           },
+                //         },
+                //       },
+                //       plugins: {
+                //         legend: {
+                //           labels: {
+                //             color: 'white', // Legend text color
+                //           },
+                //         },
+                //         datalabels: false, // Disable datalabels for non-Pie charts
+                //       },
+                //     }
+                //   });
+                // }
     }
-
-
-        // Monthly Line Chart 5
-        if (monthlyCounts5.length > 0) {
-          const monthlyLineChartCtx5 = monthlyBarChartRef5.current.getContext('2d');
-          new Chart(monthlyLineChartCtx5, {
-            type: 'line', // Change to 'line'
-            data: {
-              labels: monthlyCounts5.map(item => item.month),
-              datasets: [{
-                label: 'Monthly Car Counts',
-                data: monthlyCounts5.map(item => item.count),
-                backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                borderColor: 'rgba(255, 206, 86, 1)',
-                borderWidth: 2,
-                fill: false, // Set to false for line chart
-                tension: 0.1, // Smooth lines
-              }]
-            },
-            options: {
-              layout: {
-                padding: {
-                  top: 20, // Adjust padding as necessary
-                  right: 20,
-                  bottom: 60,
-                  left: 20,
-                }
-              },
-              responsive: true, // Make the chart responsive
-              maintainAspectRatio: false, // Allow the chart to fill the container
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  ticks: {
-                    color: 'white', // Y-axis label color
-                  },
-                },
-                x: {
-                  ticks: {
-                    color: 'white', // X-axis label color
-                  },
-                },
-              },
-              plugins: {
-                legend: {
-                  labels: {
-                    color: 'white', // Legend text color
-                  },
-                },
-                datalabels: false, // Disable datalabels for non-Pie charts
-              },
-            }
-          });
-        }
-
-
-                // Monthly Line Chart 6
-                if (monthlyCounts6.length > 0) {
-                  const monthlyLineChartCtx6 = monthlyBarChartRef6.current.getContext('2d');
-                  new Chart(monthlyLineChartCtx6, {
-                    type: 'line', // Change to 'line'
-                    data: {
-                      labels: monthlyCounts6.map(item => item.month),
-                      datasets: [{
-                        label: 'Monthly Contact Us Counts',
-                        data: monthlyCounts6.map(item => item.count),
-                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                        borderColor: 'rgba(255, 206, 86, 1)',
-                        borderWidth: 2,
-                        fill: false, // Set to false for line chart
-                        tension: 0.1, // Smooth lines
-                      }]
-                    },
-                    options: {
-                      layout: {
-                        padding: {
-                          top: 20, // Adjust padding as necessary
-                          right: 20,
-                          bottom: 60,
-                          left: 20,
-                        }
-                      },
-                      responsive: true, // Make the chart responsive
-                      maintainAspectRatio: false, // Allow the chart to fill the container
-                      scales: {
-                        y: {
-                          beginAtZero: true,
-                          ticks: {
-                            color: 'white', // Y-axis label color
-                          },
-                        },
-                        x: {
-                          ticks: {
-                            color: 'white', // X-axis label color
-                          },
-                        },
-                      },
-                      plugins: {
-                        legend: {
-                          labels: {
-                            color: 'white', // Legend text color
-                          },
-                        },
-                        datalabels: false, // Disable datalabels for non-Pie charts
-                      },
-                    }
-                  });
-                }
-    }
-  }, [videoData, totalVideos, maleCustomerCounts, femaleCustomerCounts, monthlyCounts, monthlyCounts2, monthlyCounts3, monthlyCounts4, monthlyCounts5, monthlyCounts6 ]);
+  }, [videoData, totalVideos, maleCustomerCounts, femaleCustomerCounts, monthlyCounts, monthlyCounts2, monthlyCounts3, monthlyCounts4, monthlyCounts5,  ]);//monthlyCounts6
 
   return (
     <div style={{
@@ -731,7 +731,7 @@ if (monthlyCounts.length > 0) {
             }}>Total Video Number (Bar Chart)</h4>
             <canvas ref={barChartRef} height="300"></canvas>
           </div>
-          <div style={{
+          {/* <div style={{
             padding: '20px',
             border: '1px solid #fff',
             borderRadius: '10px',
@@ -745,7 +745,7 @@ if (monthlyCounts.length > 0) {
               marginBottom: '10px'
             }}>Total Contact Us Clicks (Pie Chart)</h4>
             <canvas ref={pieChartRef}></canvas>
-          </div>
+          </div> */}
           <div style={{
             padding: '20px',
             border: '1px solid #fff',
@@ -776,50 +776,52 @@ if (monthlyCounts.length > 0) {
 
 
 
-        <div style={{ 
+        {/* <div style={{ 
           gridColumn: '1 / -1',
           padding: '0px', height: '80px' }}>
             <h4 style={{ color: '#fff', borderBottom: '1px solid #fff', paddingBottom: '10px', marginBottom: '0px', marginTop: '10px', fontSize: '27px' }}>All Monthly Statistics Charts</h4>
-           {/*  <canvas ref={monthlyBarChartRef}></canvas> */}
-        </div>
+             
+        </div> */}
 
 
 
           {/* Monthly Line Chart */}
-        <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '300px' }}>
+
+
+        <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '350px' }}>
           <h4 style={{ color: '#fff', borderBottom: '1px solid #fff', paddingBottom: '10px', marginBottom: '10px' }}>Monthly Restaurant Counts (Line Chart)</h4>
-          <canvas ref={monthlyBarChartRef}></canvas> {/* Updated canvas for monthly counts */}
+          <canvas ref={monthlyBarChartRef}></canvas> 
         </div>
 
-          {/* Monthly Line Chart */}
-          <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '300px' }}>
+          
+          {/* <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '300px' }}>
           <h4 style={{ color: '#fff', borderBottom: '1px solid #fff', paddingBottom: '10px', marginBottom: '10px' }}>Monthly Table Counts (Line Chart)</h4>
-          <canvas ref={monthlyBarChartRef2}></canvas> {/* Updated canvas for monthly counts */}
+          <canvas ref={monthlyBarChartRef2}></canvas> 
         </div>
 
-        {/* Monthly Line Chart */}
+        
         <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '300px' }}>
           <h4 style={{ color: '#fff', borderBottom: '1px solid #fff', paddingBottom: '10px', marginBottom: '10px' }}>Monthly Waiter Counts (Line Chart)</h4>
-          <canvas ref={monthlyBarChartRef3}></canvas> {/* Updated canvas for monthly counts */}
+          <canvas ref={monthlyBarChartRef3}></canvas> 
         </div>
 
-         {/* Monthly Line Chart */}
+         
          <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '300px' }}>
           <h4 style={{ color: '#fff', borderBottom: '1px solid #fff', paddingBottom: '10px', marginBottom: '10px' }}>Monthly Valet Counts (Line Chart)</h4>
-          <canvas ref={monthlyBarChartRef4}></canvas> {/* Updated canvas for monthly counts */}
+          <canvas ref={monthlyBarChartRef4}></canvas> 
         </div>
 
-          {/* Monthly Line Chart */}
+          
           <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '300px' }}>
-          <h4 style={{ color: '#fff', borderBottom: '1px solid #fff', paddingBottom: '10px', marginBottom: '10px' }}>Monthly Contact Us Counts (Line Chart)</h4>
-          <canvas ref={monthlyBarChartRef5}></canvas> {/* Updated canvas for monthly counts */}
-        </div>
+          <h4 style={{ color: '#fff', borderBottom: '1px solid #fff', paddingBottom: '10px', marginBottom: '10px' }}>Monthly Car Counts (Line Chart)</h4>
+          <canvas ref={monthlyBarChartRef5}></canvas> 
+        </div> */}
 
-        {/* Monthly Line Chart */}
-        <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '300px' }}>
+        
+        {/* <div style={{ padding: '20px', border: '1px solid #fff', borderRadius: '10px', backgroundColor: '#1e1e1e', boxShadow: '0 0 10px rgba(255, 255, 255, 0.1)', height: '300px' }}>
           <h4 style={{ color: '#fff', borderBottom: '1px solid #fff', paddingBottom: '10px', marginBottom: '10px' }}>Monthly Contact Us Counts (Line Chart)</h4>
-          <canvas ref={monthlyBarChartRef6}></canvas> {/* Updated canvas for monthly counts */}
-        </div>
+          <canvas ref={monthlyBarChartRef6}></canvas> 
+        </div> */}
 
         </>
       )}

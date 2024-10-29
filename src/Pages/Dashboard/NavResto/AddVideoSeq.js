@@ -21,6 +21,8 @@ const AddVideoSeq = () => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [totalDuration, setTotalDuration] = useState(0); // New state for total duration
+  const [totalDuration2, setTotalDuration2] = useState(0); // New state for total duration
+  const [totalDuration3, setTotalDuration3] = useState(0); // New state for total duration
 
   const getQueryParams = (query) => {
     return new URLSearchParams(query);
@@ -93,26 +95,61 @@ const AddVideoSeq = () => {
   
   fetchTotalVideoLength(); // Fetch total video length on mount
 
+
+
+  const fetchTotalRushVideoLength = async () => {
+    try {
+      const waytrixToken = localStorage.getItem('waytrixToken');
+
+      // Send POST request with restoId in the request body
+      const { data } = await axios.post(`${ipAddress}/api/Auth/getTotalRushVideoLengthByRestoId`, {
+        restoId: restoId // Send restoId in the request body
+      }, {
+        headers: {
+          Authorization: waytrixToken
+        }
+      });
+  
+      console.log('API response:', data); // Debugging line
+      setTotalDuration2(data.totalDuration || 0); // Set total duration from API response
+    } catch (error) {
+      console.error('Error fetching total video length:', error);
+      setTotalDuration2(0); // Fallback value if the request fails
+    }
+  };
+  fetchTotalRushVideoLength(); // Fetch total video length on mount
+
+
+  // Effect to calculate totalDuration3
+useEffect(() => {
+  const calculateTotalDuration3 = () => {
+    setTotalDuration3(totalDuration - totalDuration2);
+  };
+  calculateTotalDuration3();
+}, [totalDuration, totalDuration2]); // Dependencies: run effect when totalDuration or totalDuration2 changes
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const videoDuration = await calculateVideoDuration(formData.videoURL);
       console.log('Calculated video duration:', videoDuration); // Debugging line
-  
-      const totalLength = await fetchTotalVideoLength();
-      console.log('Total video length:', totalDuration); // Debugging line
-  
-      if (totalDuration + videoDuration > 3600) { // 3600 seconds = 1 hour
+
+      // Determine which total duration to use based on rushHour checkbox
+      const exceedsLimit = formData.rushHour 
+        ? totalDuration2 + videoDuration > 3600 
+        : totalDuration3 + videoDuration > 3600;
+
+      if (exceedsLimit) { 
         setErrorMessage('Cannot add more videos. The total length exceeds one hour.');
-        console.error('Error: Total video length exceeds one hour.'); // Debugging line
+        console.error('Error: Total video length exceeds one hour.');
         return;
       }
-  
+
       const waytrixToken = localStorage.getItem('waytrixToken');
       const { data } = await axios.post(`${ipAddress}/api/VideoRoutes/AddVideo`, {
         videoURL: formData.videoURL,
         restoId: restoId,
-    
         Displayed: 0,
         partnerId: formData.partnerId,
         uploadDate: formData.uploadDate,
@@ -123,12 +160,11 @@ const AddVideoSeq = () => {
           Authorization: waytrixToken
         }
       });
-  
+
       console.log('Response:', data);
       setShowModal(true);
       setTimeout(() => {
         window.location.reload(); // Force refresh the page
-        //window.location.href = '/';
       }, 3000); // Redirect after 3 seconds
     } catch (error) {
       console.error('Error:', error);
@@ -141,8 +177,8 @@ const AddVideoSeq = () => {
   return (
     <div className="form-container">
       <Multer />
-      <h1 className="title">Upload Advertisement <br />
-      (Total Videos Time: {Math.floor(totalDuration / 60)}m:{Math.round(totalDuration % 60)}s)
+      <h1 className="title">Upload Advertisement  {/* <br /> */}
+      {/* (Total Videos Time: {Math.floor(totalDuration / 60)}m:{Math.round(totalDuration % 60)}s) */}
       </h1>
       <form className="luxurious-form" onSubmit={handleSubmit}>
         <div className="form-group">

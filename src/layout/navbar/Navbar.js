@@ -151,7 +151,7 @@ const Navbar = () => {
                   <li className='aSubTitle'>    <Link className='Link' to="/AddPartners">Add Partners</Link></li>
                   <li className='aSubTitle'>    <Link className='Link' to="/AddVoucher">Add Voucher</Link></li>
                   {/* <li className='aSubTitle'>    <Link className='Link' to="/GetRestoAccountButtons">Add Buttons</Link></li> */}
-                  <li className='aSubTitle'>    <Link className='Link' to="/TableLocations">Table Locations</Link></li>
+                  {/* <li className='aSubTitle'>    <Link className='Link' to="/TableLocations">Table Locations</Link></li> */}
                   {/* <li className='aSubTitle'>    <Link className='Link' to="/AddCustomButtons">Add Custom Buttons</Link></li> */}
                   <li className='aSubTitle'>    <Link className='Link' to="/GetAllRestoForVidPrev">Video Preview</Link></li>
                   {/* <li className='aSubTitle'>    <Link className='Link' to="/GetRestoForAddTableOrValet">Add Table Or Valet</Link></li> */}

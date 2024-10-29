@@ -43,48 +43,73 @@ const GetSurveys = () => {
   const exportSurveysToPDF = () => {
     const doc = new jsPDF();
     doc.setFontSize(12);
-
+  
     surveys.forEach((survey, index) => {
-      doc.text(`Survey #${index + 1}`, 10, 10 + index * 50);
-      doc.text(`Name: ${survey.name}`, 10, 20 + index * 50);
-      doc.text(`Phone: ${survey.phone}`, 10, 30 + index * 50);
-      doc.text(`Food Quality: ${survey.foodQuality}`, 10, 40 + index * 50);
-      doc.text(`Service Quality: ${survey.serviceQuality}`, 10, 50 + index * 50);
-      doc.text(`Staff Friendliness: ${survey.staffFriendliness}`, 10, 60 + index * 50);
-      doc.text(`Value for Money: ${survey.valueForMoney}`, 10, 70 + index * 50);
-      doc.text(`Restaurant Cleanliness: ${survey.restaurantCleanliness}`, 10, 80 + index * 50);
-      doc.text(`Restaurant Design: ${survey.restaurantDesign}`, 10, 90 + index * 50);
-      doc.text(`Way Trix Service: ${survey.wayTrixService}`, 10, 100 + index * 50);
-      doc.text(`Additional Comments: ${survey.additionalComments}`, 10, 110 + index * 50);
-
+      const formattedDate = new Date(survey.date).toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+      });
+  
+      doc.text(`Survey #${index + 1}`, 10, 10 + index * 60);
+      doc.text(`Name: ${survey.name}`, 10, 20 + index * 60);
+      doc.text(`Phone: ${survey.phone}`, 10, 30 + index * 60);
+      doc.text(`Date: ${formattedDate}`, 10, 40 + index * 60);
+      doc.text(`Food Quality: ${survey.foodQuality}`, 10, 50 + index * 60);
+      doc.text(`Service Quality: ${survey.serviceQuality}`, 10, 60 + index * 60);
+      doc.text(`Staff Friendliness: ${survey.staffFriendliness}`, 10, 70 + index * 60);
+      doc.text(`Value for Money: ${survey.valueForMoney}`, 10, 80 + index * 60);
+      doc.text(`Restaurant Cleanliness: ${survey.restaurantCleanliness}`, 10, 90 + index * 60);
+      doc.text(`Restaurant Design: ${survey.restaurantDesign}`, 10, 100 + index * 60);
+      doc.text(`Way Trix Service: ${survey.wayTrixService}`, 10, 110 + index * 60);
+      doc.text(`Additional Comments: ${survey.additionalComments}`, 10, 120 + index * 60);
+  
       if (index !== surveys.length - 1) {
         doc.addPage();
       }
     });
-
+  
     doc.save('surveys.pdf');
   };
+  
 
   // Function to export surveys as an Excel file
   const exportSurveysToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(surveys.map(survey => ({
-      Name: survey.name,
-      Phone: survey.phone,
-      'Food Quality': survey.foodQuality,
-      'Service Quality': survey.serviceQuality,
-      'Staff Friendliness': survey.staffFriendliness,
-      'Value for Money': survey.valueForMoney,
-      'Restaurant Cleanliness': survey.restaurantCleanliness,
-      'Restaurant Design': survey.restaurantDesign,
-      'Way Trix Service': survey.wayTrixService,
-      'Additional Comments': survey.additionalComments
-    })));
-
+    const worksheet = XLSX.utils.json_to_sheet(
+      surveys.map(survey => {
+        const formattedDate = new Date(survey.date).toLocaleString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true
+        });
+  
+        return {
+          Name: survey.name,
+          Phone: survey.phone,
+          Date: formattedDate,
+          'Food Quality': survey.foodQuality,
+          'Service Quality': survey.serviceQuality,
+          'Staff Friendliness': survey.staffFriendliness,
+          'Value for Money': survey.valueForMoney,
+          'Restaurant Cleanliness': survey.restaurantCleanliness,
+          'Restaurant Design': survey.restaurantDesign,
+          'Way Trix Service': survey.wayTrixService,
+          'Additional Comments': survey.additionalComments
+        };
+      })
+    );
+  
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Surveys');
     XLSX.writeFile(workbook, 'surveys.xlsx');
   };
-
+  
   return (
     <div className="dark-theme">
       <h1 className="title">Survey Results</h1>
@@ -112,6 +137,15 @@ const GetSurveys = () => {
           <div key={survey._id} className="survey-item">
             <h2 className="survey-name">{survey.name}</h2>
             <p className="survey-detail"><strong>Phone:</strong> {survey.phone}</p>
+            <p className="survey-detail">
+              <strong>Date:</strong> {new Date(survey.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+              })}
+            </p>
 
             <div className="survey-details">
               <p className="survey-detail"><strong>Food Quality:</strong> {survey.foodQuality}</p>

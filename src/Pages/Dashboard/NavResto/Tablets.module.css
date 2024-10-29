@@ -48,7 +48,16 @@
     padding: 4px; /* Optional: add padding if needed */
   }
 
-
+  .osm {
+    margin: 0px;
+    overflow: hidden;
+    height: 200px;
+  }
+  .osmiframe {
+ 
+    width: 90%;
+  }
+  
 
 
 

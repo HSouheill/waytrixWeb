@@ -117,24 +117,38 @@ const Tablets = () => {
         <table className={styles.excelTable}>
           <thead>
             <tr>
+              <th>Location</th>
               <th>ID</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Phone</th>
+              {/* <th>Phone</th> */}
               <th>IP</th>
-              <th>Password</th>
+              {/* <th>Password</th> */}
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {tables.map((table) => (
               <tr key={table._id}>
+                <td>
+                <div className={styles.osm}>
+                  <iframe
+                    className={styles.osmiframe}
+                    title={`Map for ${table.name}`}
+                    width="600"
+                    height="450"
+                    loading="lazy"
+                    allowFullScreen
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${table.longitude},${table.latitude},${table.longitude},${table.latitude}`}
+                  />
+                </div>
+                </td>
                 <td>{table._id}</td>
                 <td>{table.name}</td>
                 <td>{table.email}</td>
-                <td>{table.phone}</td>
+                {/* <td>{table.phone}</td> */}
                 <td>{table.ip}</td>
-                <td>{table.password}</td>
+                {/* <td>{table.password}</td> */}
                 <td>
                   <button
                     className={styles.button}

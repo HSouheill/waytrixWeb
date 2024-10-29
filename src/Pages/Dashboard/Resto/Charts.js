@@ -5,8 +5,8 @@ import { ipAddress } from '../../../config';
 import './Cards.css'; // Import CSS for styling
 import 'chartjs-plugin-datalabels';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, PointElement, LinearScale, CategoryScale } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels, LineElement, PointElement, LinearScale, CategoryScale);
 
 export const Cards = () => {
   const [surveyData, setSurveyData] = useState(null);
@@ -14,6 +14,11 @@ export const Cards = () => {
   const [femaleCustomerCounts, setFemaleCustomerCounts] = useState([]); // New state for female counts
   const maleBarChartRef = useRef(null);
   const femaleBarChartRef = useRef(null); // New ref for female chart
+  const [monthlyRestoCounts, setMonthlyRestoCounts] = useState([]); // State for monthly counts
+  const [monthlySurveyCounts, setMonthlySurveyCounts] = useState([]); // State for monthly counts
+  const [monthlyCarCounts, setMonthlyCarCounts] = useState([]); // State for monthly counts
+  const [monthlyWaiterCounts, setMonthlyWaiterCounts] = useState([]); // State for monthly counts
+  const [monthlyValetCounts, setMonthlyValetCounts] = useState([]); // State for monthly counts
 
   useEffect(() => {
     const fetchSurveyData = async () => {
@@ -83,10 +88,123 @@ export const Cards = () => {
       }
     };
 
+    const fetchMonthlyRestoCounts = async () => {
+      try {
+        const restoToken = localStorage.getItem('restoToken');
+        const reqBody = {
+          restoId: localStorage.getItem('restoId')
+        };
+  
+        const response = await axios.post(`${ipAddress}/api/Auth/getMonthlyTableCount2`, reqBody, {
+          headers: {
+            Authorization: `${restoToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        console.log('Monthly Table Counts:', response.data); // Log response data
+        setMonthlyRestoCounts(response.data);
+      } catch (error) {
+        console.error('Error fetching monthly table counts:', error);
+      }
+    };
+    
+    const fetchMonthlySurveyCounts = async () => {
+      try {
+        const restoToken = localStorage.getItem('restoToken');
+        const reqBody = {
+          restoId: localStorage.getItem('restoId')
+        };
+  
+        const response = await axios.post(`${ipAddress}/api/Auth/getMonthlySurveyCount2`, reqBody, {
+          headers: {
+            Authorization: `${restoToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        console.log('Monthly Survey Counts:', response.data); // Log response data
+        setMonthlySurveyCounts(response.data);
+      } catch (error) {
+        console.error('Error fetching monthly survey counts:', error);
+      }
+    };
+
+
+    const fetchMonthlyCarCounts = async () => {
+      try {
+        const restoToken = localStorage.getItem('restoToken');
+        const reqBody = {
+          restoId: localStorage.getItem('restoId')
+        };
+  
+        const response = await axios.post(`${ipAddress}/api/Auth/getMonthlyCarCount2`, reqBody, {
+          headers: {
+            Authorization: `${restoToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        console.log('Monthly Car Counts:', response.data); // Log response data
+        setMonthlyCarCounts(response.data);
+      } catch (error) {
+        console.error('Error fetching monthly car counts:', error);
+      }
+    };
+
+
+    const fetchMonthlyWaiterCounts = async () => {
+      try {
+        const restoToken = localStorage.getItem('restoToken');
+        const reqBody = {
+          restoId: localStorage.getItem('restoId')
+        };
+  
+        const response = await axios.post(`${ipAddress}/api/Auth/getMonthlyWaiterCount2`, reqBody, {
+          headers: {
+            Authorization: `${restoToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        console.log('Monthly waiter Counts:', response.data); // Log response data
+        setMonthlyWaiterCounts(response.data);
+      } catch (error) {
+        console.error('Error fetching monthly waiter counts:', error);
+      }
+    };
+
+
+    const fetchMonthlyValetCounts = async () => {
+      try {
+        const restoToken = localStorage.getItem('restoToken');
+        const reqBody = {
+          restoId: localStorage.getItem('restoId')
+        };
+  
+        const response = await axios.post(`${ipAddress}/api/Auth/getMonthlyValetCount2`, reqBody, {
+          headers: {
+            Authorization: `${restoToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        console.log('Monthly valet Counts:', response.data); // Log response data
+        setMonthlyValetCounts(response.data);
+      } catch (error) {
+        console.error('Error fetching monthly valet counts:', error);
+      }
+    };
+
     // Fetch data initially when component mounts
     fetchSurveyData();
     fetchMaleCustomerCounts();
     fetchFemaleCustomerCounts(); // Fetch female counts too
+    fetchMonthlyRestoCounts(); // Fetch monthly counts
+    fetchMonthlySurveyCounts(); // Fetch monthly counts
+    fetchMonthlyCarCounts(); // Fetch monthly counts
+    fetchMonthlyWaiterCounts(); // Fetch monthly counts
+    fetchMonthlyValetCounts(); // Fetch monthly counts
 
     // Fetch data every 10 seconds
     const interval = setInterval(() => {
@@ -98,6 +216,87 @@ export const Cards = () => {
     // Clean up interval to prevent memory leaks
     return () => clearInterval(interval);
   }, []); // Empty dependency array ensures this effect runs only once on mount
+
+
+   // Chart data for monthly table counts
+   const monthlyChartData = {
+    labels: monthlyRestoCounts.map(item => item.month), // Get month names
+    datasets: [
+      {
+        label: 'Monthly Table Counts',
+        data: monthlyRestoCounts.map(item => item.count), // Get counts
+        fill: false,
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        tension: 0.1, // Smooth line
+      },
+    ],
+  };
+
+
+  // Chart data for monthly survey counts
+  const monthlyChartData2 = {
+    labels: monthlySurveyCounts.map(item => item.month), // Get month names
+    datasets: [
+      {
+        label: 'Monthly Survey Counts',
+        data: monthlySurveyCounts.map(item => item.count), // Get counts
+        fill: false,
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        tension: 0.1, // Smooth line
+      },
+    ],
+  };
+
+
+
+   // Chart data for monthly survey counts
+   const monthlyChartData3 = {
+    labels: monthlyCarCounts.map(item => item.month), // Get month names
+    datasets: [
+      {
+        label: 'Monthly Car Counts',
+        data: monthlyCarCounts.map(item => item.count), // Get counts
+        fill: false,
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        tension: 0.1, // Smooth line
+      },
+    ],
+  };
+
+     // Chart data for monthly survey counts
+     const monthlyChartData4 = {
+      labels: monthlyWaiterCounts.map(item => item.month), // Get month names
+      datasets: [
+        {
+          label: 'Monthly Waiter Counts',
+          data: monthlyWaiterCounts.map(item => item.count), // Get counts
+          fill: false,
+          backgroundColor: 'rgba(75, 192, 192, 0.6)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          tension: 0.1, // Smooth line
+        },
+      ],
+    };
+
+
+         // Chart data for monthly valet counts
+         const monthlyChartData5 = {
+          labels: monthlyValetCounts.map(item => item.month), // Get month names
+          datasets: [
+            {
+              label: 'Monthly valet Counts',
+              data: monthlyValetCounts.map(item => item.count), // Get counts
+              fill: false,
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              tension: 0.1, // Smooth line
+            },
+          ],
+        };
+    
 
   // Chart data for the main dashboard
   const chartData = {
@@ -306,6 +505,21 @@ const pieChartOptions = {
           </div>
           <div className="chart-item female-bar-chart">
             <Bar data={femaleCustomerChartData} options={femaleChartOptions} ref={femaleBarChartRef} />
+          </div>
+          <div className="chart-item monthly-line-chart">
+            <Line data={monthlyChartData} options={commonChartOptions} /> {/* Render Line Chart */}
+          </div>
+          <div className="chart-item monthly-line-chart2">
+            <Line data={monthlyChartData2} options={commonChartOptions} /> {/* Render Line Chart */}
+          </div>
+          <div className="chart-item monthly-line-chart2">
+            <Line data={monthlyChartData3} options={commonChartOptions} /> {/* Render Line Chart */}
+          </div>
+          <div className="chart-item monthly-line-chart2">
+            <Line data={monthlyChartData4} options={commonChartOptions} /> {/* Render Line Chart */}
+          </div>
+          <div className="chart-item monthly-line-chart2">
+            <Line data={monthlyChartData5} options={commonChartOptions} /> {/* Render Line Chart */}
           </div>
         </div>
       )}

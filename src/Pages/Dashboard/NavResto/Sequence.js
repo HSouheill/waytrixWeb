@@ -16,6 +16,9 @@ const Sequence = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filterOption, setFilterOption] = useState('all'); // State for filtering options
+  const [totalDuration, setTotalDuration] = useState(0); // New state for total duration
+  const [totalDuration2, setTotalDuration2] = useState(0); // New state for total duration
+  const [totalDuration3, setTotalDuration3] = useState(0); // New state for total duration
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -144,6 +147,63 @@ const Sequence = () => {
     }
   };
 
+
+  const fetchTotalVideoLength = async () => {
+    try {
+      const waytrixToken = localStorage.getItem('waytrixToken');
+
+      // Send POST request with restoId in the request body
+      const { data } = await axios.post(`${ipAddress}/api/Auth/videos-length`, {
+        restoId: restoId // Send restoId in the request body
+      }, {
+        headers: {
+          Authorization: waytrixToken
+        }
+      });
+  
+      console.log('API response:', data); // Debugging line
+      setTotalDuration(data.totalDuration || 0); // Set total duration from API response
+    } catch (error) {
+      console.error('Error fetching total video length:', error);
+      setTotalDuration(0); // Fallback value if the request fails
+    }
+  };
+  fetchTotalVideoLength(); // Fetch total video length on mount
+
+
+
+  const fetchTotalRushVideoLength = async () => {
+    try {
+      const waytrixToken = localStorage.getItem('waytrixToken');
+
+      // Send POST request with restoId in the request body
+      const { data } = await axios.post(`${ipAddress}/api/Auth/getTotalRushVideoLengthByRestoId`, {
+        restoId: restoId // Send restoId in the request body
+      }, {
+        headers: {
+          Authorization: waytrixToken
+        }
+      });
+  
+      console.log('API response:', data); // Debugging line
+      setTotalDuration2(data.totalDuration || 0); // Set total duration from API response
+    } catch (error) {
+      console.error('Error fetching total video length:', error);
+      setTotalDuration2(0); // Fallback value if the request fails
+    }
+  };
+  fetchTotalRushVideoLength(); // Fetch total video length on mount
+
+// Effect to calculate totalDuration3
+useEffect(() => {
+  const calculateTotalDuration3 = () => {
+    setTotalDuration3(totalDuration - totalDuration2);
+  };
+
+  calculateTotalDuration3();
+}, [totalDuration, totalDuration2]); // Dependencies: run effect when totalDuration or totalDuration2 changes
+
+
   return (
     <div>
       <h1>Video Table</h1>
@@ -152,12 +212,15 @@ const Sequence = () => {
 
       {/* Dropdown for filtering */}
       <div>
-        <label htmlFor="filter" style={{ fontSize: 16, marginBottom: 5 }}>Filter Videos:</label>
-        <select id="filter" value={filterOption} onChange={handleFilterChange}>
+        <label htmlFor="filter" style={{ fontSize: 16, marginBottom: 5, marginRight: 5 }}>Filter Videos:</label>
+        <select id="filter" value={filterOption} onChange={handleFilterChange} style={{marginRight: 15}}>
           <option value="all">Show All</option>
           <option value="rush">Filter Rush Hour</option>
           <option value="non-rush">Filter Non-Rush Hour</option>
         </select>
+        (Total Videos Time: {Math.floor(totalDuration / 60)}m:{Math.round(totalDuration % 60)}s)
+        (Rush Hour Videos Time: {Math.floor(totalDuration2 / 60)}m:{Math.round(totalDuration2 % 60)}s)
+        (Non Rush Hour Videos Time: {Math.floor(totalDuration3 / 60)}m:{Math.round(totalDuration3 % 60)}s)
       </div>
 
       <table className={styles.excelTable}>
