@@ -36,9 +36,14 @@ export const UserInfo = () => {
   
     // Extracting name, email, and phone from userInfo
     const filteredUserInfo = userInfo.map(user => ({
+      ID: user._id,
       Name: user.name,
       Email: user.email,
-      Phone: user.phone
+      Phone: user.phone,
+      Gender: user.gender,
+      Age: user.age,
+      Role: user.role,
+      Verified: user.verified,
     }));
   
     const worksheet = XLSX.utils.json_to_sheet(filteredUserInfo);
@@ -46,7 +51,7 @@ export const UserInfo = () => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "UserInfo");
   
     // Style header
-    const header = worksheet['!ref'].split(':')[0];
+    //const header = worksheet['!ref'].split(':')[0];
     for (let col = 0; col < 3; col++) { // Adjusted for 3 columns
       const cell = worksheet[`${String.fromCharCode(65 + col)}1`];
       if (cell) {
@@ -86,89 +91,115 @@ export const UserInfo = () => {
   
   const exportToPDF = async () => {
     if (!userInfo) return;
-  
+
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage(PageSizes.A4);
-  
-    const { width, height } = page.getSize();
-    const margin = 50;
-    const fontSize = 12;
-  
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    let page = pdfDoc.addPage(PageSizes.A4);
+
+    const { height } = page.getSize();
+    const margin = 50;
+    const fontSize = 10;
+    const lineHeight = fontSize * 1.8;
     const textColor = rgb(0, 0, 0);
-  
-    let y = height - margin;
-  
-    const headers = ['Name',  'Phone', 'Email'];
+
+    const headers = ['Name', 'Phone', 'Email', 'Gender', 'Age', 'Verified'];
     const data = userInfo.map(user => [
-      user.name,
-      user.phone,
-      user.email,
-      
-    
+        user.name || "",
+        user.phone || "",
+        user.email || "",
+        user.gender || "",
+        user.age || "",
+        user.verified ? "Yes" : "No",
     ]);
-  
+
+    let y = height - margin;
+
+    // Define specific column widths
+    const columnWidths = {
+        name: 80,
+        phone: 100,
+        email: 150,
+        gender: 60,
+        age: 40,
+        verified: 50,
+    };
+
+    //const totalWidth = Object.values(columnWidths).reduce((sum, w) => sum + w, 0);
+
     // Draw title
-    page.drawText('User Informations', {
-      x: margin,
-      y,
-      size: fontSize + 2,
-      font: font,
-      color: textColor,
-    });
-    y -= fontSize * 2;
-  
-    // Draw horizontal line under title
-    page.drawLine({
-      start: { x: margin, y: y - fontSize },
-      end: { x: width - margin, y: y - fontSize },
-      thickness: 1,
-      color: rgb(0, 0, 0),
-    });
-    y -= fontSize * 2;
-  
-    // Calculate column width dynamically based on number of columns
-    const columnWidth = (width - 2 * margin) / headers.length;
-  
-    // Draw headers
-    headers.forEach((header, index) => {
-      page.drawText(header, {
-        x: margin + index * columnWidth,
+    page.drawText('User Information', {
+        x: margin,
         y,
-        size: fontSize,
-        font: font,
+        size: fontSize + 2,
+        font,
         color: textColor,
-      });
     });
-    y -= fontSize * 1.5;
-  
+    y -= lineHeight * 2;
+
+    // Draw headers
+    let xPosition = margin;
+    headers.forEach((header, index) => {
+        const colKey = headers[index].toLowerCase();
+        page.drawText(header, {
+            x: xPosition,
+            y,
+            size: fontSize,
+            font,
+            color: textColor,
+        });
+        xPosition += columnWidths[colKey];
+    });
+    y -= lineHeight;
+
     // Draw data rows
     data.forEach(row => {
-      row.forEach((cell, index) => {
-        page.drawText(cell.toString(), {
-          x: margin + index * columnWidth,
-          y,
-          size: fontSize,
-          font: font,
-          color: textColor,
+        if (y < margin + lineHeight) {  // Check for page space
+            page = pdfDoc.addPage(PageSizes.A4);
+            y = height - margin;
+
+            // Redraw headers on new page
+            xPosition = margin;
+            headers.forEach((header, index) => {
+                const colKey = headers[index].toLowerCase();
+                page.drawText(header, {
+                    x: xPosition,
+                    y,
+                    size: fontSize,
+                    font,
+                    color: textColor,
+                });
+                xPosition += columnWidths[colKey];
+            });
+            y -= lineHeight;
+        }
+
+        xPosition = margin;
+        row.forEach((cell, index) => {
+            const colKey = headers[index].toLowerCase();
+            page.drawText(cell.toString(), {
+                x: xPosition,
+                y,
+                size: fontSize,
+                font,
+                color: textColor,
+            });
+            xPosition += columnWidths[colKey];
         });
-      });
-      y -= fontSize * 1.5;
+        y -= lineHeight;
     });
-  
+
     // Save PDF and create download link
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
-  
+
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', 'user_info.pdf');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
-  
+};
 
   return (
     <div className="dark-theme-table">
