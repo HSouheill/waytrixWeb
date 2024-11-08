@@ -148,53 +148,51 @@ const Sequence = () => {
   };
 
 
-  const fetchTotalVideoLength = async () => {
-    try {
-      const waytrixToken = localStorage.getItem('waytrixToken');
-
-      // Send POST request with restoId in the request body
-      const { data } = await axios.post(`${ipAddress}/api/Auth/videos-length`, {
-        restoId: restoId // Send restoId in the request body
-      }, {
-        headers: {
-          Authorization: waytrixToken
-        }
-      });
+  useEffect(() => {
+    const fetchTotalVideoLength = async () => {
+      try {
+        const waytrixToken = localStorage.getItem('waytrixToken');
+        const { data } = await axios.post(`${ipAddress}/api/Auth/videos-length`, {
+          restoId: restoId
+        }, {
+          headers: {
+            Authorization: waytrixToken
+          }
+        });
   
-      console.log('API response:', data); // Debugging line
-      setTotalDuration(data.totalDuration || 0); // Set total duration from API response
-    } catch (error) {
-      console.error('Error fetching total video length:', error);
-      setTotalDuration(0); // Fallback value if the request fails
-    }
-  };
-  fetchTotalVideoLength(); // Fetch total video length on mount
-
-
-
-  const fetchTotalRushVideoLength = async () => {
-    try {
-      const waytrixToken = localStorage.getItem('waytrixToken');
-
-      // Send POST request with restoId in the request body
-      const { data } = await axios.post(`${ipAddress}/api/Auth/getTotalRushVideoLengthByRestoId`, {
-        restoId: restoId // Send restoId in the request body
-      }, {
-        headers: {
-          Authorization: waytrixToken
-        }
-      });
+        console.log('API response:', data);
+        setTotalDuration(data.totalDuration || 0);
+      } catch (error) {
+        console.error('Error fetching total video length:', error);
+        setTotalDuration(0);
+      }
+    };
+    fetchTotalVideoLength();
+  }, [restoId]); // Run once on mount or when restoId changes
   
-      console.log('API response:', data); // Debugging line
-      setTotalDuration2(data.totalDuration || 0); // Set total duration from API response
-    } catch (error) {
-      console.error('Error fetching total video length:', error);
-      setTotalDuration2(0); // Fallback value if the request fails
-    }
-  };
-  fetchTotalRushVideoLength(); // Fetch total video length on mount
+  useEffect(() => {
+    const fetchTotalRushVideoLength = async () => {
+      try {
+        const waytrixToken = localStorage.getItem('waytrixToken');
+        const { data } = await axios.post(`${ipAddress}/api/Auth/getTotalRushVideoLengthByRestoId`, {
+          restoId: restoId
+        }, {
+          headers: {
+            Authorization: waytrixToken
+          }
+        });
+  
+        console.log('API response:', data);
+        setTotalDuration2(data.totalDuration || 0);
+      } catch (error) {
+        console.error('Error fetching rush video length:', error);
+        setTotalDuration2(0);
+      }
+    };
+    fetchTotalRushVideoLength();
+  }, [restoId]); // Run once on mount or when restoId changes
 
-// Effect to calculate totalDuration3
+//Effect to calculate totalDuration3
 useEffect(() => {
   const calculateTotalDuration3 = () => {
     setTotalDuration3(totalDuration - totalDuration2);

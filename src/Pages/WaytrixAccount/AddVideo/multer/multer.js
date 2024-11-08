@@ -23,7 +23,7 @@ function ImageUpload() {
                 }
             });
             // Modify the imagePath to ensure it's using http instead of https
-            let modifiedPath = response.data.replace(/^https:\/\//, 'http://');
+            let modifiedPath = response.data.replace(/^https:\/\//, 'https://'); //change here for https
             setImagePath(modifiedPath);
             console.log('Image uploaded:', modifiedPath);
         } catch (error) {
