@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './AddMenu.css';
-import Multer from '../../WaytrixAccount/AddVideo/multer/multer'
 import { ipAddress } from '../../../config';
+
 const AddMenu = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -21,8 +21,7 @@ const AddMenu = () => {
       });
       setModalVisible(true);
       setTimeout(() => {
-        //window.location.href = '/';
-        window.location.reload(); // Force refresh the page
+        window.location.reload(); // Refresh the page after 5 seconds
       }, 5000);
     } catch (error) {
       console.error('Error:', error);
@@ -31,13 +30,13 @@ const AddMenu = () => {
 
   return (
     <div className="form-container">
-        <Multer/>
-      <h1>Add Menu Screen</h1>
+      <h1>Add/Update Menu Screen</h1>
       <form className="form" onSubmit={handleSubmit}>
-        <label htmlFor="imageLink">Image Link:</label>
-        <input type="text" id="imageLink" name="imageLink" />
-<center>
-        <button type="submit">Submit</button></center>
+        <label htmlFor="imageLink">Menu Link (insert website link or google drive PDF link):</label>
+        <input type="text" id="imageLink" name="imageLink" required />
+        <center>
+          <button type="submit">Submit</button>
+        </center>
       </form>
 
       {modalVisible && (
