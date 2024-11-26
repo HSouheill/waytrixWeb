@@ -19,6 +19,7 @@ const Sequence = () => {
   const [totalDuration, setTotalDuration] = useState(0); // New state for total duration
   const [totalDuration2, setTotalDuration2] = useState(0); // New state for total duration
   const [totalDuration3, setTotalDuration3] = useState(0); // New state for total duration
+  const [selectedTable, setSelectedTable] = useState('all'); // State for filtering by table
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -100,17 +101,28 @@ const Sequence = () => {
     fetchVideos();
   }, [restoId]);
 
-  const handleFilterChange = (e) => {
-    const filterValue = e.target.value;
-    setFilterOption(filterValue);
 
-    let filtered;
-    if (filterValue === 'rush') {
-      filtered = videos.filter(video => video.rushHour);
-    } else if (filterValue === 'non-rush') {
-      filtered = videos.filter(video => !video.rushHour);
-    } else {
-      filtered = videos;
+  const handleFilterChange = (e) => {
+    setFilterOption(e.target.value);
+    applyFilters(e.target.value, selectedTable);
+  };
+
+  const handleTableFilterChange = (e) => {
+    setSelectedTable(e.target.value);
+    applyFilters(filterOption, e.target.value);
+  };
+
+  const applyFilters = (rushHourFilter, tableFilter) => {
+    let filtered = videos;
+
+    if (rushHourFilter === 'rush') {
+      filtered = filtered.filter(video => video.rushHour);
+    } else if (rushHourFilter === 'non-rush') {
+      filtered = filtered.filter(video => !video.rushHour);
+    }
+
+    if (tableFilter !== 'all') {
+      filtered = filtered.filter(video => video.tableId === tableFilter);
     }
 
     setFilteredVideos(filtered);
@@ -210,8 +222,10 @@ useEffect(() => {
 
       {/* Dropdown for filtering */}
       <div>
-        <label htmlFor="filter" style={{ fontSize: 16, marginBottom: 5, marginRight: 5 }}>Filter Videos:</label>
-        <select id="filter" value={filterOption} onChange={handleFilterChange} style={{marginRight: 15}}>
+        <label htmlFor="filter" style={{ fontSize: 16, marginBottom: 5, marginRight: 5 }}>Filter by Rush Hour:</label>
+        <select id="filter" value={filterOption} onChange={handleFilterChange} 
+        style={{ width: '150px', marginBottom: '5px', marginRight: 15 }} // Custom width and margin-bottom
+        >
           <option value="all">Show All</option>
           <option value="rush">Filter Rush Hour</option>
           <option value="non-rush">Filter Non-Rush Hour</option>
@@ -219,6 +233,20 @@ useEffect(() => {
         (Total Videos Time: {Math.floor(totalDuration / 60)}m:{Math.round(totalDuration % 60)}s)
         (Rush Hour Videos Time: {Math.floor(totalDuration2 / 60)}m:{Math.round(totalDuration2 % 60)}s)
         (Non Rush Hour Videos Time: {Math.floor(totalDuration3 / 60)}m:{Math.round(totalDuration3 % 60)}s)
+      </div>
+        {/* Filter by Table */}
+        <div>
+        <label htmlFor="tableFilter">Filter by Table: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;
+        </label>
+        <select id="tableFilter" value={selectedTable} onChange={handleTableFilterChange} 
+        style={{ width: '150px', marginBottom: '10px' }} // Custom width and margin-bottom
+        >
+          <option value="all">Show All</option>
+          {Object.entries(tableNames).map(([id, name]) => (
+            <option key={id} value={id}>{name}</option>
+          ))}
+        </select>
       </div>
 
       <table className={styles.excelTable}>

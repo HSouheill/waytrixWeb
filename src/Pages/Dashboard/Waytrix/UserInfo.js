@@ -38,6 +38,7 @@ export const UserInfo = () => {
     const filteredUserInfo = userInfo.map(user => ({
       ID: user._id,
       Name: user.name,
+      LastName: user.lastName,
       Email: user.email,
       Phone: user.phone,
       Gender: user.gender,
@@ -91,115 +92,131 @@ export const UserInfo = () => {
   
   const exportToPDF = async () => {
     if (!userInfo) return;
-
+  
     const pdfDoc = await PDFDocument.create();
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     let page = pdfDoc.addPage(PageSizes.A4);
-
+  
     const { height } = page.getSize();
     const margin = 50;
     const fontSize = 10;
     const lineHeight = fontSize * 1.8;
     const textColor = rgb(0, 0, 0);
-
-    const headers = ['Name', 'Phone', 'Email', 'Gender', 'Age', 'Verified'];
+  
+    const headers = ['Name', 'LastName', 'Phone', 'Email', 'Gender', 'Age', 'Verified'];
     const data = userInfo.map(user => [
-        user.name || "",
-        user.phone || "",
-        user.email || "",
-        user.gender || "",
-        user.age || "",
-        user.verified ? "Yes" : "No",
+      user.name || "",
+      user.lastName || "",
+      user.phone || "",
+      user.email || "",
+      user.gender || "",
+      user.age || "",
+      user.verified ? "Yes" : "No",
     ]);
-
+  
     let y = height - margin;
-
+  
     // Define specific column widths
     const columnWidths = {
-        name: 80,
-        phone: 100,
-        email: 150,
-        gender: 60,
-        age: 40,
-        verified: 50,
+      name: 80,
+      lastName: 70,
+      phone: 100,
+      email: 150,
+      gender: 50,
+      age: 30,
+      verified: 50,
     };
-
-    //const totalWidth = Object.values(columnWidths).reduce((sum, w) => sum + w, 0);
-
+  
     // Draw title
     page.drawText('User Information', {
-        x: margin,
-        y,
-        size: fontSize + 2,
-        font,
-        color: textColor,
+      x: margin,
+      y,
+      size: fontSize + 2,
+      font,
+      color: textColor,
     });
     y -= lineHeight * 2;
-
+  
     // Draw headers
     let xPosition = margin;
     headers.forEach((header, index) => {
-        const colKey = headers[index].toLowerCase();
-        page.drawText(header, {
+      const colKey = header.toLowerCase(); // Ensure correct column key here
+      const colWidth = columnWidths[colKey] || 100; // Default width if undefined
+      console.log(`xPosition: ${xPosition}, colKey: ${colKey}, colWidth: ${colWidth}`); // Debug log
+      if (isNaN(xPosition)) {
+        console.error('Invalid xPosition:', xPosition);
+      }
+      page.drawText(header, {
+        x: xPosition,
+        y,
+        size: fontSize,
+        font,
+        color: textColor,
+      });
+      xPosition += colWidth;
+    });
+    y -= lineHeight;
+  
+    // Draw data rows
+    data.forEach(row => {
+      if (y < margin + lineHeight) {  // Check for page space
+        page = pdfDoc.addPage(PageSizes.A4);
+        y = height - margin;
+  
+        // Redraw headers on new page
+        xPosition = margin;
+        headers.forEach((header, index) => {
+          const colKey = header.toLowerCase();
+          const colWidth = columnWidths[colKey] || 100; // Default width if undefined
+          console.log(`xPosition: ${xPosition}, colKey: ${colKey}, colWidth: ${colWidth}`); // Debug log
+          if (isNaN(xPosition)) {
+            console.error('Invalid xPosition:', xPosition);
+          }
+          page.drawText(header, {
             x: xPosition,
             y,
             size: fontSize,
             font,
             color: textColor,
-        });
-        xPosition += columnWidths[colKey];
-    });
-    y -= lineHeight;
-
-    // Draw data rows
-    data.forEach(row => {
-        if (y < margin + lineHeight) {  // Check for page space
-            page = pdfDoc.addPage(PageSizes.A4);
-            y = height - margin;
-
-            // Redraw headers on new page
-            xPosition = margin;
-            headers.forEach((header, index) => {
-                const colKey = headers[index].toLowerCase();
-                page.drawText(header, {
-                    x: xPosition,
-                    y,
-                    size: fontSize,
-                    font,
-                    color: textColor,
-                });
-                xPosition += columnWidths[colKey];
-            });
-            y -= lineHeight;
-        }
-
-        xPosition = margin;
-        row.forEach((cell, index) => {
-            const colKey = headers[index].toLowerCase();
-            page.drawText(cell.toString(), {
-                x: xPosition,
-                y,
-                size: fontSize,
-                font,
-                color: textColor,
-            });
-            xPosition += columnWidths[colKey];
+          });
+          xPosition += colWidth;
         });
         y -= lineHeight;
+      }
+  
+      xPosition = margin;
+      row.forEach((cell, index) => {
+        const colKey = headers[index].toLowerCase();
+        const colWidth = columnWidths[colKey] || 100; // Default width if undefined
+        console.log(`xPosition: ${xPosition}, colKey: ${colKey}, colWidth: ${colWidth}`); // Debug log
+        if (isNaN(xPosition)) {
+          console.error('Invalid xPosition:', xPosition);
+        }
+        page.drawText(cell.toString(), {
+          x: xPosition,
+          y,
+          size: fontSize,
+          font,
+          color: textColor,
+        });
+        xPosition += colWidth;
+      });
+      y -= lineHeight;
     });
-
+  
     // Save PDF and create download link
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
-
+  
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', 'user_info.pdf');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-};
+  };
+  
 
   return (
     <div className="dark-theme-table">
@@ -210,6 +227,7 @@ export const UserInfo = () => {
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>LastName</th>
             <th>Email</th>
             <th>Phone</th>
             <th>Gender</th>
@@ -224,6 +242,7 @@ export const UserInfo = () => {
             <tr key={user._id}>
               <td>{user._id}</td>
               <td>{user.name}</td>
+              <td>{user.lastName}</td>
               <td>{user.email}</td>
               <td>{user.phone}</td>
               <td>{user.gender}</td>
