@@ -13,10 +13,12 @@ const AddVoucher = () => {
     Quantity: '',
     email: '',
     restoIdArray: [], // Array to store selected restaurant IDs
+    partnerId: '',
   });
 
   const [restaurants, setRestaurants] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [partners, setPartners] = useState([]); // To store partners
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -36,6 +38,26 @@ const AddVoucher = () => {
 
     fetchRestaurants();
   }, []);
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const waytrixToken = localStorage.getItem('waytrixToken');
+        const config = {
+          headers: {
+            Authorization: `${waytrixToken}`,
+          },
+        };
+        const response = await axios.get(`${ipAddress}/api/ContactUsRoutes/getAllPartners`, config);
+        setPartners(response.data); // Assuming the API response contains an array of partner objects
+      } catch (error) {
+        console.error('Error fetching partners:', error);
+      }
+    };
+  
+    fetchPartners();
+  }, []);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -73,18 +95,17 @@ const AddVoucher = () => {
       const waytrixToken = localStorage.getItem('waytrixToken');
       const config = {
         headers: {
-          Authorization: `${waytrixToken}`
-        }
+          Authorization: `${waytrixToken}`,
+        },
       };
       const response = await axios.post(`${ipAddress}/api/ContactUsRoutes/AddVoucher`, formData, config);
       console.log(response.data);
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        //window.location.href = '/';
         window.location.reload(); // Force refresh the page
       }, 5000);
-
+  
       setFormData({
         name: '',
         description: '',
@@ -92,7 +113,8 @@ const AddVoucher = () => {
         pointsCost: '',
         Quantity: '',
         email: '',
-        restoIdArray: [], // Reset selected restaurant IDs after submission
+        restoIdArray: [],
+        partnerId: '', // Reset partnerId after submission
       });
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -104,6 +126,9 @@ const AddVoucher = () => {
       <div className="add-voucher-container">
         <Multer />
         <h1 className="form-title">Voucher Page</h1>
+        <center className='center'>
+        <button type="submit" style={{ marginBottom: 20 }} className="submit-button" onClick={() => { window.location.href = '/EditVoucher'; }}>ALL VOUCHERS</button>
+      </center>
         <form onSubmit={handleSubmit}>
           <label className="form-label">
             Name:
@@ -164,6 +189,23 @@ const AddVoucher = () => {
               onChange={handleChange}
               className="form-input"
             />
+          </label>
+          <label className="form-label">
+              Select Partner:
+                <select
+                    name="partnerId"
+                    value={formData.partnerId}
+                    onChange={handleChange}
+                    className="dropdown1"
+                    style={{ marginTop: '5px' }} // Add your desired margin here
+                  >
+                    <option value="">--Select Partner--</option>
+                    {partners.map((partner) => (
+                      <option key={partner._id} value={partner._id}>
+                        {partner.name}
+                      </option>
+                    ))}
+                </select>
           </label>
 
           <div className="restaurants-list">

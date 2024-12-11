@@ -47,6 +47,7 @@ import AddTablet2 from './Pages/RestoAccount/ViewTables/AddTablet2';
 import AddButtons2 from './Pages/Dashboard/NavResto/AddButtons2';
 import RestoForgotPassword from './Pages/RestoAccount/RestoForgotPassword';
 import RestoForgotPassword2 from './Pages/RestoAccount/RestoForgotPassword2';
+import EditVoucher from './Pages/WaytrixAccount/AddVoucher/EditVoucher';
 function App() {
   const [waytrixToken, setWaytrixToken] = useState(localStorage.getItem('waytrixToken') || '');
   const [restoToken, setRestoToken] = useState(localStorage.getItem('restoToken') || '');
@@ -121,6 +122,7 @@ function App() {
               <Route path="/GetForLoopId/:id" element={<GetForLoopId />} />
               <Route path="/GetRestoAccountForDelete" element={<GetRestoAccountForDelete />} />
               <Route path="/AddButtons2" element={<AddButtons2 />} />
+              <Route path="/EditVoucher" element={<EditVoucher />} />
 
 
 
