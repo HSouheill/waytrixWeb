@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './AddPartners.css';
 import axios from 'axios';
 import Multer from '../AddVideo/multer/multer';
@@ -12,7 +12,13 @@ const AddPartners = () => {
   const [password, setPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [partnerRestoAccounts, setPartnerRestoAccounts] = useState([]);
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
+
+
 
   useEffect(() => {
     fetchPartnerRestoAccounts();
@@ -58,11 +64,80 @@ const AddPartners = () => {
     setPassword(e.target.value);
   };
 
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setSelectedImage(file);
+  //     const fileUrl = URL.createObjectURL(file);
+  //     setPreviewUrl(fileUrl);
+  //   }
+  // };
+
+  const handleSelectFile = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      handleImageFile(file);
+    }
+  };
+  const handleImageFile = (file) => {
+    if (file && file.type.startsWith('image/')) {
+      setSelectedImage(file);
+      const fileUrl = URL.createObjectURL(file);
+      setPreviewUrl(fileUrl);
+    } else {
+      alert('Please upload an image file');
+    }
+  };
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      handleImageFile(files[0]);
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const selectedRestoIds = partnerRestoAccounts.filter(account => account.selected).map(account => account._id);
-    const formData = { logo, name, phone, description, password, role: 'partner', restoIdArray: selectedRestoIds };
-    console.log(selectedRestoIds)
+    
+    const formData = new FormData();
+    formData.append('logo', logo);
+    formData.append('name', name);
+    formData.append('phone', phone);
+    formData.append('description', description);
+    formData.append('password', password);
+    formData.append('role', 'partner');
+    formData.append('restoIdArray', JSON.stringify(selectedRestoIds));
+    if (selectedImage) {
+      formData.append('image', selectedImage);
+    }
 
     try {
       const token = localStorage.getItem('waytrixToken');
@@ -72,7 +147,8 @@ const AddPartners = () => {
 
       const config = {
         headers: {
-          'Authorization': token
+          'Authorization': token,
+          'Content-Type': 'multipart/form-data'
         }
       };
 
@@ -85,8 +161,9 @@ const AddPartners = () => {
         setPhone('');
         setDescription('');
         setPassword('');
-        //window.location.href = '/';
-        window.location.reload(); // Force refresh the page
+        setSelectedImage(null);
+        setPreviewUrl('');
+        window.location.reload();
       }, 5000);
     } catch (error) {
       console.error('Error adding partner:', error);
@@ -101,7 +178,7 @@ const AddPartners = () => {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev); // Toggle password visibility
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -156,7 +233,7 @@ const AddPartners = () => {
           <label htmlFor="password">Password</label>
           <div style={{ position: 'relative' }}>
             <input
-              type={showPassword ? 'text' : 'password'} // Toggle between text and password
+              type={showPassword ? 'text' : 'password'}
               id="password"
               name="password"
               value={password}
@@ -171,8 +248,61 @@ const AddPartners = () => {
                 transform: 'translateY(-50%)', 
                 cursor: 'pointer' 
               }}>
-              {showPassword ? '👁️' : '👁️‍🗨️'} {/* Eye icon to toggle visibility */}
+              {showPassword ? '👁️' : '👁️‍🗨️'}
             </span>
+          </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="image">QR Code</label>
+          <div
+            className={`drop-zone ${isDragging ? 'dragging' : ''}`}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="file-input"
+            />
+            <div className="drop-zone-content">
+              {previewUrl ? (
+                <div className="image-preview">
+                  <img src={previewUrl} alt="Preview" />
+                  <button 
+                    type="button" 
+                    className="remove-image"
+                    onClick={() => {
+                      setSelectedImage(null);
+                      setPreviewUrl('');
+                    }}
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="drop-zone-text">
+                    <span className="drop-zone-prompt">
+                      Drag and drop an image here
+                    </span>
+                    <span className="drop-zone-prompt">- OR -</span>
+                    <button
+                      type="button"
+                      className="select-file-btn"
+                      onClick={handleSelectFile}
+                    >
+                      Select File
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
         <div className="grid-container-checkt">
