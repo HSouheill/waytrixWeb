@@ -48,7 +48,7 @@ const SignIn = () => {
 
   return (
     <div className='containers'>
-      <h1 className='headerText'>Waytix Sign In</h1>
+      <h1 className='headerText'>Waytrix Sign In</h1>
       <input
         placeholder="Email"
         value={email}
