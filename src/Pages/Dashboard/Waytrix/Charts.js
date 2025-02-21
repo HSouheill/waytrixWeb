@@ -34,9 +34,11 @@ const Charts = () => {
         body: JSON.stringify({}),
       });
       const data = await response.json();
-      setMaleCustomerCounts(data);
+      // Ensure data is an array before setting state
+      setMaleCustomerCounts(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching male customer counts:', error);
+      setMaleCustomerCounts([]); // Set empty array on error
     }
   };
 
@@ -51,9 +53,10 @@ const Charts = () => {
         body: JSON.stringify({}),
       });
       const data = await response.json();
-      setFemaleCustomerCounts(data);
+      setFemaleCustomerCounts(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching female customer counts:', error);
+      setFemaleCustomerCounts([]); // Set empty array on error
     }
   };
 
@@ -74,85 +77,55 @@ const Charts = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setStats({
-        totalRestoNum: localStorage.getItem('totalRestoNum') || 0,
-        totalTableNum: localStorage.getItem('totalTableNum') || 0,
-        totalWaiterNum: localStorage.getItem('totalWaiterNum') || 0,
-        totalNumberOfCars: localStorage.getItem('totalNumberOfCars') || 0,
-        totalContactUsClick: localStorage.getItem('totalContactUsClick') || 0,
-        totalValetNum: localStorage.getItem('totalValetNum') || 0,
-        totalTabletsNum: localStorage.getItem('totalTabletsNum') || 0,
-      });
+      setStats(prevStats => ({
+        totalRestoNum: localStorage.getItem('totalRestoNum') || prevStats.totalRestoNum,
+        totalTableNum: localStorage.getItem('totalTableNum') || prevStats.totalTableNum,
+        totalWaiterNum: localStorage.getItem('totalWaiterNum') || prevStats.totalWaiterNum,
+        totalNumberOfCars: localStorage.getItem('totalNumberOfCars') || prevStats.totalNumberOfCars,
+        totalContactUsClick: localStorage.getItem('totalContactUsClick') || prevStats.totalContactUsClick,
+        totalValetNum: localStorage.getItem('totalValetNum') || prevStats.totalValetNum,
+        totalTabletsNum: localStorage.getItem('totalTabletsNum') || prevStats.totalTabletsNum,
+      }));
     }, 10000);
 
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    if (lineChartRef.current) {
-      const ctx = lineChartRef.current.getContext('2d');
-      if (ctx) {
-        if (window.myLineChart !== undefined) {
-          window.myLineChart.destroy();
-        }
-        window.myLineChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: [
-              'Resto',
-              'Table',
-              'Waiter',
-              'Car',
-              'Contact Us',
-              'Valet',
-              'Tablets'
-            ],
-            datasets: [
-              {
-                label: 'Statistics',
-                data: [
-                  stats.totalRestoNum,
-                  stats.totalTableNum,
-                  stats.totalWaiterNum,
-                  stats.totalNumberOfCars,
-                  stats.totalContactUsClick,
-                  stats.totalValetNum,
-                  stats.totalTabletsNum
-                ],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-              },
-            ],
+  // Helper function to create chart data
+  const createChartData = (type, data) => {
+    const chartConfig = {
+      type,
+      data: {
+        labels: [],
+        datasets: [{
+          label: '',
+          data: [],
+          backgroundColor: '',
+          borderColor: '',
+          borderWidth: 1,
+        }],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: 'white' },
           },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  color: 'white', // Y-axis label color
-                },
-              },
-              x: {
-                ticks: {
-                  color: 'white', // X-axis label color
-                },
-              },
-            },
-            plugins: {
-              legend: {
-                labels: {
-                  color: 'white', // Legend text color
-                },
-              },
-              datalabels: false, // Disable datalabels for non-Pie charts
-            },
+          x: {
+            ticks: { color: 'white' },
           },
-          
-        });
-      }
-    }
-  }, [stats]);
+        },
+        plugins: {
+          legend: {
+            labels: { color: 'white' },
+          },
+          datalabels: false,
+        },
+      },
+    };
+
+    return chartConfig;
+  };
 
   useEffect(() => {
     if (barChartRef.current) {
@@ -209,56 +182,27 @@ const Charts = () => {
   }, [maleCustomerCounts]);
 
   useEffect(() => {
-    if (femaleBarChartRef.current) {
+    if (femaleBarChartRef.current && Array.isArray(femaleCustomerCounts)) {
       const ctx = femaleBarChartRef.current.getContext('2d');
       if (ctx) {
-        if (window.myFemaleBarChart !== undefined) {
+        if (window.myFemaleBarChart) {
           window.myFemaleBarChart.destroy();
         }
 
-        // Prepare the data for the female bar chart
         const labels = femaleCustomerCounts.map(item => item.ageGroup);
         const data = femaleCustomerCounts.map(item => item.count);
 
-        window.myFemaleBarChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: 'Female Customers Age Groups',
-                data: data,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  color: 'white', // Y-axis label color
-                },
-              },
-              x: {
-                ticks: {
-                  color: 'white', // X-axis label color
-                },
-              },
-            },
-            plugins: {
-              legend: {
-                labels: {
-                  color: 'white', // Legend text color
-                },
-              },
-              datalabels: false, // Disable datalabels for non-Pie charts
-            },
-          },
-          
-        });
+        const chartConfig = createChartData('bar');
+        chartConfig.data.labels = labels;
+        chartConfig.data.datasets[0] = {
+          label: 'Female Customers Age Groups',
+          data: data,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+        };
+
+        window.myFemaleBarChart = new Chart(ctx, chartConfig);
       }
     }
   }, [femaleCustomerCounts]);
