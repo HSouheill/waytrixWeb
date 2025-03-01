@@ -79,13 +79,14 @@ const AddPartners = () => {
   // };
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const selectedRestoIds = partnerRestoAccounts
-      .filter(account => account.selected)
-      .map(account => account._id);
-  
+        .filter(account => account.selected)
+        .map(account => account._id);
+
     // Create FormData object
     const formData = new FormData();
+    formData.append('logo', logo);
     formData.append('name', name);
     formData.append('phone', phone);
     formData.append('description', description);
@@ -94,53 +95,39 @@ const AddPartners = () => {
     
     // Append restoIdArray
     selectedRestoIds.forEach((id, index) => {
-      formData.append(`restoIdArray[${index}]`, id);
+        formData.append(`restoIdArray[${index}]`, id);
     });
-  
-    // Append the QR code file
-    // if (qrCodeFile) {
-    //   formData.append('qrCodeImage', qrCodeFile);
-    // }
-  
-    try {
-      const token = localStorage.getItem('waytrixToken');
-      if (!token) {
-        throw new Error('Authentication token not found');
-      }
-      
-      const config = {
-        headers: {
-          'Authorization': token,
-          'Content-Type': 'multipart/form-data'
-        }
-      };
-  
-      const response = await axios.post(`${ipAddress}/api/ContactUsRoutes/AddPartner`, formData, config);
-      console.log('Partner added successfully:', response.data);
-      
-      setModalVisible(true);
-      setTimeout(() => {
-        setModalVisible(false);
-        setName('');
-        setPhone('');
-        setDescription('');
-        setPassword('');
-        // setQrCodeFile(null);
-        // setQrCodePreview('');
-        // Reset checkboxes
-        const updatedAccounts = partnerRestoAccounts.map(account => ({
-          ...account,
-          selected: false
-        }));
-        setPartnerRestoAccounts(updatedAccounts);
-        // Refresh the page
-        window.location.reload();
-      }, 3000);
-    } catch (error) {
-      console.error('Error adding partner:', error);
-      alert(`Failed to add partner: ${error.response?.data?.message || error.message}`);
+
+    // Append the file
+    if (qrCodeFile) {
+        formData.append('qrCodeImage', qrCodeFile);
     }
-  };
+
+    try {
+        const token = localStorage.getItem('waytrixToken');
+        const config = {
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+
+        await axios.post(`${ipAddress}/api/ContactUsRoutes/AddPartner`, formData, config);
+        setModalVisible(true);
+        setTimeout(() => {
+            setModalVisible(false);
+            setLogo(''); // Reset logo field too
+            setName('');
+            setPhone('');
+            setDescription('');
+            setPassword('');
+            setQrCodeFile(null);
+            window.location.reload();
+        }, 5000);
+    } catch (error) {
+        console.error('Error adding partner:', error);
+    }
+};
 
 
 
@@ -227,7 +214,7 @@ const AddPartners = () => {
           </div>
         </div>
 
-        {/* <label>qr code</label>
+        <label>qr code</label>
         <div className="form-group">
         <label htmlFor="qrcode">QR Code Image</label>
         <input
@@ -236,13 +223,14 @@ const AddPartners = () => {
           accept="uploads/*"
           onChange={handleQrCodeUpload}
         />
+        {/* <input type="file" name="image" onChange={handleQrCodeUpload} /> */}
 
         {qrCodePreview && (
           <div className="qr-preview">
             <img src={qrCodePreview} alt="QR Code preview" style={{ maxWidth: '200px' }} />
           </div>
         )}
-      </div> */}
+      </div>
 
         <div className="grid-container-checkt">
           {partnerRestoAccounts.map(account => (
